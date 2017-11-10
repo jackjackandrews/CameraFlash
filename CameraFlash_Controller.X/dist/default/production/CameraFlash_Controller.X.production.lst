@@ -1,0 +1,2339 @@
+
+
+Microchip Technology PIC18 LITE Macro Assembler V1.38 build -256452561 
+                                                                                               Fri Nov 10 23:21:41 2017
+
+Microchip Technology Omniscient Code Generator v1.38 (Free mode) build 201607010351
+     1                           	processor	18F8722
+     2                           	fnconf	rparam,??,?,0
+     3                           	opt	pw 120
+     4                           	opt	lm
+     5                           	psect	nvCOMRAM,global,class=COMRAM,space=1,delta=1
+     6                           	psect	cinit,global,reloc=2,class=CODE,delta=1
+     7                           	psect	bssCOMRAM,global,class=COMRAM,space=1,delta=1
+     8                           	psect	cstackCOMRAM,global,class=COMRAM,space=1,delta=1
+     9                           	psect	text0,global,reloc=2,class=CODE,delta=1
+    10                           	psect	text1,global,reloc=2,class=CODE,delta=1
+    11                           	psect	text2,global,reloc=2,class=CODE,delta=1
+    12                           	psect	text3,global,reloc=2,class=CODE,delta=1
+    13                           	psect	text4,global,reloc=2,class=CODE,delta=1
+    14                           	psect	text5,global,reloc=2,class=CODE,delta=1
+    15                           	psect	text6,global,reloc=2,class=CODE,delta=1
+    16                           	psect	text7,global,reloc=2,class=CODE,delta=1
+    17                           	psect	text8,global,reloc=2,class=CODE,delta=1
+    18                           	psect	text9,global,reloc=2,class=CODE,delta=1
+    19                           	psect	text10,global,reloc=2,class=CODE,delta=1
+    20                           	psect	text11,global,reloc=2,class=CODE,delta=1
+    21                           	psect	intcode,global,reloc=2,class=CODE,delta=1
+    22                           	psect	intcode_body,global,reloc=2,class=CODE,delta=1
+    23                           	psect	text13,global,reloc=2,class=CODE,delta=1
+    24                           	psect	text14,global,reloc=2,class=CODE,delta=1
+    25                           	psect	text15,global,reloc=2,class=CODE,delta=1
+    26                           	psect	intsave_regs,global,class=BIGRAM,space=1,delta=1
+    27                           	psect	rparam,global,class=COMRAM,space=1,delta=1
+    28                           	psect	temp,global,ovrld,common,class=COMRAM,space=1,delta=1
+    29  0000                     
+    30                           	psect	nvCOMRAM
+    31  000020                     __pnvCOMRAM:
+    32                           	opt stack 0
+    33  000020                     _systick_tmr_reload:
+    34                           	opt stack 0
+    35  000020                     	ds	2
+    36  000022                     _systick_interrupt_priority:
+    37                           	opt stack 0
+    38  000022                     	ds	1
+    39  0000                     _INTCON2bits	set	4081
+    40  0000                     _INTCONbits	set	4082
+    41  0000                     _LATDbits	set	3980
+    42  0000                     _LATHbits	set	3984
+    43  0000                     _LATJbits	set	3985
+    44  0000                     _PORTB	set	3969
+    45  0000                     _PORTBbits	set	3969
+    46  0000                     _RCONbits	set	4048
+    47  0000                     _T0CON	set	4053
+    48  0000                     _T0CONbits	set	4053
+    49  0000                     _TMR0H	set	4055
+    50  0000                     _TMR0L	set	4054
+    51  0000                     _TRISBbits	set	3987
+    52  0000                     _TRISDbits	set	3989
+    53  0000                     _TRISHbits	set	3993
+    54  0000                     _TRISJ	set	3994
+    55  0000                     _TRISJbits	set	3994
+    56                           
+    57                           ; #config settings
+    58  0000                     
+    59                           	psect	cinit
+    60  00048E                     __pcinit:
+    61                           	opt stack 0
+    62  00048E                     start_initialization:
+    63                           	opt stack 0
+    64  00048E                     __initialization:
+    65                           	opt stack 0
+    66                           
+    67                           ; Clear objects allocated to COMRAM (8 bytes)
+    68  00048E  EE00  F018         	lfsr	0,__pbssCOMRAM
+    69  000492  0E08               	movlw	8
+    70  000494                     clear_0:
+    71  000494  6AEE               	clrf	postinc0,c
+    72  000496  06E8               	decf	wreg,f,c
+    73  000498  E1FD               	bnz	clear_0
+    74  00049A                     end_of_initialization:
+    75                           	opt stack 0
+    76  00049A                     __end_of__initialization:
+    77                           	opt stack 0
+    78  00049A  9023               	bcf	int$flags,0,c	;clear compiler interrupt flag (level 1)
+    79  00049C  9223               	bcf	int$flags,1,c	;clear compiler interrupt flag (level 2)
+    80  00049E  0100               	movlb	0
+    81  0004A0  EF28  F002         	goto	_main	;jump to C main() function
+    82                           postinc0	equ	0xFEE
+    83                           wreg	equ	0xFE8
+    84                           
+    85                           	psect	bssCOMRAM
+    86  000018                     __pbssCOMRAM:
+    87                           	opt stack 0
+    88  000018                     _lcd_state:
+    89                           	opt stack 0
+    90  000018                     	ds	3
+    91  00001B                     _counter:
+    92                           	opt stack 0
+    93  00001B                     	ds	2
+    94  00001D                     _buttons_interrupt_priority:
+    95                           	opt stack 0
+    96  00001D                     	ds	1
+    97  00001E                     _buttons_use_interrupts:
+    98                           	opt stack 0
+    99  00001E                     	ds	1
+   100  00001F                     _button_state_bits:
+   101                           	opt stack 0
+   102  00001F                     	ds	1
+   103                           postinc0	equ	0xFEE
+   104                           wreg	equ	0xFE8
+   105                           
+   106                           	psect	cstackCOMRAM
+   107  000001                     __pcstackCOMRAM:
+   108                           	opt stack 0
+   109  000001                     i2WriteTimer0@timer0:
+   110                           	opt stack 0
+   111                           
+   112                           ; 2 bytes @ 0x0
+   113  000001                     	ds	2
+   114  000003                     i2WriteTimer0@timer:
+   115                           	opt stack 0
+   116                           
+   117                           ; 2 bytes @ 0x2
+   118  000003                     	ds	2
+   119  000005                     ??_ISR:
+   120  000005                     
+   121                           ; 1 bytes @ 0x4
+   122  000005                     	ds	14
+   123  000013                     ??_write_port:
+   124  000013                     ??_write_cmd:
+   125  000013                     ??_write_data:
+   126  000013                     WriteTimer0@timer0:
+   127                           	opt stack 0
+   128                           
+   129                           ; 2 bytes @ 0x12
+   130  000013                     	ds	2
+   131  000015                     write_port@data:
+   132                           	opt stack 0
+   133  000015                     write_cmd@cmd:
+   134                           	opt stack 0
+   135  000015                     write_data@data:
+   136                           	opt stack 0
+   137  000015                     WriteTimer0@timer:
+   138                           	opt stack 0
+   139                           
+   140                           ; 2 bytes @ 0x14
+   141  000015                     	ds	1
+   142  000016                     ??_IO_LCD_Init:
+   143  000016                     IO_LCD_WriteChar@character:
+   144                           	opt stack 0
+   145                           
+   146                           ; 1 bytes @ 0x15
+   147  000016                     	ds	1
+   148  000017                     TMR_SysTick_configure@interrupt_priority:
+   149                           	opt stack 0
+   150                           
+   151                           ; 1 bytes @ 0x16
+   152  000017                     	ds	1
+   153  000018                     postinc0	equ	0xFEE
+   154                           wreg	equ	0xFE8
+   155                           
+   156                           ; 1 bytes @ 0x17
+   157 ;;
+   158 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   159 ;;
+   160 ;; *************** function _main *****************
+   161 ;; Defined at:
+   162 ;;		line 21 in file "test.c"
+   163 ;; Parameters:    Size  Location     Type
+   164 ;;		None
+   165 ;; Auto vars:     Size  Location     Type
+   166 ;;  count           2    0        unsigned int 
+   167 ;; Return value:  Size  Location     Type
+   168 ;;                  1    wreg      void 
+   169 ;; Registers used:
+   170 ;;		wreg, status,2, status,0, cstack
+   171 ;; Tracked objects:
+   172 ;;		On entry : 0/0
+   173 ;;		On exit  : 0/0
+   174 ;;		Unchanged: 0/0
+   175 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   176 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   177 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   178 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   179 ;;      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   180 ;;Total ram usage:        0 bytes
+   181 ;; Hardware stack levels required when called:    8
+   182 ;; This function calls:
+   183 ;;		_IO_LCD_Init
+   184 ;;		_IO_LCD_WriteChar
+   185 ;;		_IO_LED_configure
+   186 ;;		_TMR_SysTick_configure
+   187 ;; This function is called by:
+   188 ;;		Startup code after reset
+   189 ;; This function uses a non-reentrant model
+   190 ;;
+   191                           
+   192                           	psect	text0
+   193  000450                     __ptext0:
+   194                           	opt stack 0
+   195  000450                     _main:
+   196                           	opt stack 23
+   197                           
+   198                           ;test.c: 23: unsigned int count;
+   199                           ;test.c: 25: RCONbits.IPEN = 0;
+   200                           
+   201                           ;incstack = 0
+   202  000450  9ED0               	bcf	4048,7,c	;volatile
+   203                           
+   204                           ;test.c: 27: INTCONbits.PEIE = 0;
+   205  000452  9CF2               	bcf	intcon,6,c	;volatile
+   206                           
+   207                           ;test.c: 28: INTCONbits.GIE = 1;
+   208  000454  8EF2               	bsf	intcon,7,c	;volatile
+   209                           
+   210                           ;test.c: 30: TMR_SysTick_configure(0);
+   211  000456  0E00               	movlw	0
+   212  000458  EC14  F002         	call	_TMR_SysTick_configure
+   213                           
+   214                           ;test.c: 31: IO_LED_configure();
+   215  00045C  EC80  F002         	call	_IO_LED_configure	;wreg free
+   216                           
+   217                           ;test.c: 33: TRISJ = 0x0F;
+   218  000460  0E0F               	movlw	15
+   219  000462  6E9A               	movwf	3994,c	;volatile
+   220                           
+   221                           ;test.c: 34: TRISHbits.TRISH6 = 0;
+   222  000464  9C99               	bcf	3993,6,c	;volatile
+   223                           
+   224                           ;test.c: 35: TRISHbits.TRISH7 = 0;
+   225  000466  9E99               	bcf	3993,7,c	;volatile
+   226                           
+   227                           ;test.c: 37: IO_LCD_Init();
+   228  000468  EC82  F001         	call	_IO_LCD_Init	;wreg free
+   229                           
+   230                           ;test.c: 39: IO_LCD_WriteChar('h');
+   231  00046C  0E68               	movlw	104
+   232  00046E  EC64  F002         	call	_IO_LCD_WriteChar
+   233  000472                     l128:
+   234  000472  D7FF               	goto	l128
+   235  000474                     __end_of_main:
+   236                           	opt stack 0
+   237                           intcon	equ	0xFF2
+   238                           postinc0	equ	0xFEE
+   239                           wreg	equ	0xFE8
+   240                           
+   241 ;; *************** function _TMR_SysTick_configure *****************
+   242 ;; Defined at:
+   243 ;;		line 86 in file "TMR_SysTick.c"
+   244 ;; Parameters:    Size  Location     Type
+   245 ;;  interrupt_pr    1    wreg     unsigned char 
+   246 ;; Auto vars:     Size  Location     Type
+   247 ;;  interrupt_pr    1   22[COMRAM] unsigned char 
+   248 ;; Return value:  Size  Location     Type
+   249 ;;                  1    wreg      void 
+   250 ;; Registers used:
+   251 ;;		wreg, status,2, status,0, cstack
+   252 ;; Tracked objects:
+   253 ;;		On entry : 0/0
+   254 ;;		On exit  : 0/0
+   255 ;;		Unchanged: 0/0
+   256 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   257 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   258 ;;      Locals:         1       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   259 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   260 ;;      Totals:         1       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   261 ;;Total ram usage:        1 bytes
+   262 ;; Hardware stack levels used:    1
+   263 ;; Hardware stack levels required when called:    7
+   264 ;; This function calls:
+   265 ;;		TMR_SysTick@enable_interrupt
+   266 ;;		_reload_timer
+   267 ;;		_start_timer
+   268 ;; This function is called by:
+   269 ;;		_main
+   270 ;; This function uses a non-reentrant model
+   271 ;;
+   272                           
+   273                           	psect	text1
+   274  000428                     __ptext1:
+   275                           	opt stack 0
+   276  000428                     _TMR_SysTick_configure:
+   277                           	opt stack 23
+   278                           
+   279                           ;incstack = 0
+   280                           ;TMR_SysTick_configure@interrupt_priority stored from wreg
+   281  000428  6E17               	movwf	TMR_SysTick_configure@interrupt_priority,c
+   282                           
+   283                           ;TMR_SysTick.c: 88: T0CON = 0x08;
+   284  00042A  0E08               	movlw	8
+   285  00042C  6ED5               	movwf	4053,c	;volatile
+   286                           
+   287                           ;TMR_SysTick.c: 89: TMR0H = 0;
+   288  00042E  0E00               	movlw	0
+   289  000430  6ED7               	movwf	4055,c	;volatile
+   290                           
+   291                           ;TMR_SysTick.c: 90: TMR0L = 0;
+   292  000432  0E00               	movlw	0
+   293  000434  6ED6               	movwf	4054,c	;volatile
+   294                           
+   295                           ;TMR_SysTick.c: 92: systick_tmr_reload = 65535 - (10000000 / 1000 / 4);
+   296  000436  0EF6               	movlw	246
+   297  000438  6E21               	movwf	_systick_tmr_reload+1,c	;volatile
+   298  00043A  0E3B               	movlw	59
+   299  00043C  6E20               	movwf	_systick_tmr_reload,c	;volatile
+   300                           
+   301                           ;TMR_SysTick.c: 94: reload_timer();
+   302  00043E  EC6C  F002         	call	_reload_timer	;wreg free
+   303                           
+   304                           ;TMR_SysTick.c: 96: systick_interrupt_priority = interrupt_priority;
+   305  000442  C017  F022         	movff	TMR_SysTick_configure@interrupt_priority,_systick_interrupt_priority	;volatile
+   306                           
+   307                           ;TMR_SysTick.c: 98: enable_interrupt();
+   308  000446  EC3A  F002         	call	TMR_SysTick@enable_interrupt	;wreg free
+   309                           
+   310                           ;TMR_SysTick.c: 100: start_timer();
+   311  00044A  EC85  F002         	call	_start_timer	;wreg free
+   312  00044E  0012               	return		;funcret
+   313  000450                     __end_of_TMR_SysTick_configure:
+   314                           	opt stack 0
+   315                           intcon	equ	0xFF2
+   316                           postinc0	equ	0xFEE
+   317                           wreg	equ	0xFE8
+   318                           
+   319 ;; *************** function _start_timer *****************
+   320 ;; Defined at:
+   321 ;;		line 21 in file "TMR_SysTick.c"
+   322 ;; Parameters:    Size  Location     Type
+   323 ;;		None
+   324 ;; Auto vars:     Size  Location     Type
+   325 ;;		None
+   326 ;; Return value:  Size  Location     Type
+   327 ;;                  1    wreg      void 
+   328 ;; Registers used:
+   329 ;;		None
+   330 ;; Tracked objects:
+   331 ;;		On entry : 0/0
+   332 ;;		On exit  : 0/0
+   333 ;;		Unchanged: 0/0
+   334 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   335 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   336 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   337 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   338 ;;      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   339 ;;Total ram usage:        0 bytes
+   340 ;; Hardware stack levels used:    1
+   341 ;; Hardware stack levels required when called:    4
+   342 ;; This function calls:
+   343 ;;		Nothing
+   344 ;; This function is called by:
+   345 ;;		_TMR_SysTick_configure
+   346 ;;		_TMR_SysTick_startTimer
+   347 ;; This function uses a non-reentrant model
+   348 ;;
+   349                           
+   350                           	psect	text2
+   351  00050A                     __ptext2:
+   352                           	opt stack 0
+   353  00050A                     _start_timer:
+   354                           	opt stack 25
+   355                           
+   356                           ;TMR_SysTick.c: 23: T0CONbits.TMR0ON = 1;
+   357                           
+   358                           ;incstack = 0
+   359  00050A  8ED5               	bsf	4053,7,c	;volatile
+   360  00050C  0012               	return		;funcret
+   361  00050E                     __end_of_start_timer:
+   362                           	opt stack 0
+   363                           intcon	equ	0xFF2
+   364                           postinc0	equ	0xFEE
+   365                           wreg	equ	0xFE8
+   366                           
+   367 ;; *************** function TMR_SysTick@enable_interrupt *****************
+   368 ;; Defined at:
+   369 ;;		line 46 in file "TMR_SysTick.c"
+   370 ;; Parameters:    Size  Location     Type
+   371 ;;		None
+   372 ;; Auto vars:     Size  Location     Type
+   373 ;;		None
+   374 ;; Return value:  Size  Location     Type
+   375 ;;                  1    wreg      void 
+   376 ;; Registers used:
+   377 ;;		wreg, status,2, status,0, cstack
+   378 ;; Tracked objects:
+   379 ;;		On entry : 0/0
+   380 ;;		On exit  : 0/0
+   381 ;;		Unchanged: 0/0
+   382 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   383 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   384 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   385 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   386 ;;      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   387 ;;Total ram usage:        0 bytes
+   388 ;; Hardware stack levels used:    1
+   389 ;; Hardware stack levels required when called:    6
+   390 ;; This function calls:
+   391 ;;		_reload_timer
+   392 ;; This function is called by:
+   393 ;;		_TMR_SysTick_configure
+   394 ;;		_TMR_SysTick_enableInterrupt
+   395 ;;		_TMR_SysTick_switchInterruptPriority
+   396 ;; This function uses a non-reentrant model
+   397 ;;
+   398                           
+   399                           	psect	text3
+   400  000474                     __ptext3:
+   401                           	opt stack 0
+   402  000474                     TMR_SysTick@enable_interrupt:
+   403                           	opt stack 23
+   404                           
+   405                           ;TMR_SysTick.c: 48: if(systick_interrupt_priority == 0) {
+   406                           
+   407                           ;incstack = 0
+   408  000474  5022               	movf	_systick_interrupt_priority,w,c	;volatile
+   409  000476  A4D8               	btfss	status,2,c
+   410  000478  D002               	goto	l1169
+   411                           
+   412                           ;TMR_SysTick.c: 49: INTCON2bits.TMR0IP = 0;
+   413  00047A  94F1               	bcf	intcon2,2,c	;volatile
+   414                           
+   415                           ;TMR_SysTick.c: 50: }
+   416  00047C  D003               	goto	l1173
+   417  00047E                     l1169:
+   418                           
+   419                           ;TMR_SysTick.c: 52: else if(systick_interrupt_priority == 1) {
+   420  00047E  0422               	decf	_systick_interrupt_priority,w,c	;volatile
+   421  000480  B4D8               	btfsc	status,2,c
+   422                           
+   423                           ;TMR_SysTick.c: 53: INTCON2bits.TMR0IP = 1;
+   424  000482  84F1               	bsf	intcon2,2,c	;volatile
+   425  000484                     l1173:
+   426                           
+   427                           ;TMR_SysTick.c: 54: }
+   428                           ;TMR_SysTick.c: 56: reload_timer();
+   429  000484  EC6C  F002         	call	_reload_timer	;wreg free
+   430                           
+   431                           ;TMR_SysTick.c: 58: INTCONbits.TMR0IF = 0;
+   432  000488  94F2               	bcf	intcon,2,c	;volatile
+   433                           
+   434                           ;TMR_SysTick.c: 59: INTCONbits.TMR0IE = 1;
+   435  00048A  8AF2               	bsf	intcon,5,c	;volatile
+   436  00048C  0012               	return		;funcret
+   437  00048E                     __end_ofTMR_SysTick@enable_interrupt:
+   438                           	opt stack 0
+   439                           intcon	equ	0xFF2
+   440                           intcon2	equ	0xFF1
+   441                           postinc0	equ	0xFEE
+   442                           wreg	equ	0xFE8
+   443                           status	equ	0xFD8
+   444                           
+   445 ;; *************** function _reload_timer *****************
+   446 ;; Defined at:
+   447 ;;		line 33 in file "TMR_SysTick.c"
+   448 ;; Parameters:    Size  Location     Type
+   449 ;;		None
+   450 ;; Auto vars:     Size  Location     Type
+   451 ;;		None
+   452 ;; Return value:  Size  Location     Type
+   453 ;;                  1    wreg      void 
+   454 ;; Registers used:
+   455 ;;		cstack
+   456 ;; Tracked objects:
+   457 ;;		On entry : 0/0
+   458 ;;		On exit  : 0/0
+   459 ;;		Unchanged: 0/0
+   460 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   461 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   462 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   463 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   464 ;;      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   465 ;;Total ram usage:        0 bytes
+   466 ;; Hardware stack levels used:    1
+   467 ;; Hardware stack levels required when called:    5
+   468 ;; This function calls:
+   469 ;;		_WriteTimer0
+   470 ;; This function is called by:
+   471 ;;		TMR_SysTick@enable_interrupt
+   472 ;;		_TMR_SysTick_configure
+   473 ;;		_TMR_SysTick_resetCounter
+   474 ;;		_TMR_SysTick_setCounter
+   475 ;; This function uses a non-reentrant model
+   476 ;;
+   477                           
+   478                           	psect	text4
+   479  0004D8                     __ptext4:
+   480                           	opt stack 0
+   481  0004D8                     _reload_timer:
+   482                           	opt stack 24
+   483                           
+   484                           ;TMR_SysTick.c: 35: WriteTimer0(systick_tmr_reload);
+   485                           
+   486                           ;incstack = 0
+   487  0004D8  C020  F013         	movff	_systick_tmr_reload,WriteTimer0@timer0	;volatile
+   488  0004DC  C021  F014         	movff	_systick_tmr_reload+1,WriteTimer0@timer0+1	;volatile
+   489  0004E0  EC52  F002         	call	_WriteTimer0	;wreg free
+   490  0004E4  0012               	return		;funcret
+   491  0004E6                     __end_of_reload_timer:
+   492                           	opt stack 0
+   493                           intcon	equ	0xFF2
+   494                           intcon2	equ	0xFF1
+   495                           postinc0	equ	0xFEE
+   496                           wreg	equ	0xFE8
+   497                           status	equ	0xFD8
+   498                           
+   499 ;; *************** function _WriteTimer0 *****************
+   500 ;; Defined at:
+   501 ;;		line 16 in file "C:\Program Files (x86)\Microchip\xc8\v1.38\sources\pic18\plib\Timers\t0write.c"
+   502 ;; Parameters:    Size  Location     Type
+   503 ;;  timer0          2   18[COMRAM] unsigned int 
+   504 ;; Auto vars:     Size  Location     Type
+   505 ;;  timer           2   20[COMRAM] struct Timers
+   506 ;; Return value:  Size  Location     Type
+   507 ;;                  1    wreg      void 
+   508 ;; Registers used:
+   509 ;;		None
+   510 ;; Tracked objects:
+   511 ;;		On entry : 0/0
+   512 ;;		On exit  : 0/0
+   513 ;;		Unchanged: 0/0
+   514 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   515 ;;      Params:         2       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   516 ;;      Locals:         2       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   517 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   518 ;;      Totals:         4       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   519 ;;Total ram usage:        4 bytes
+   520 ;; Hardware stack levels used:    1
+   521 ;; Hardware stack levels required when called:    4
+   522 ;; This function calls:
+   523 ;;		Nothing
+   524 ;; This function is called by:
+   525 ;;		_reload_timer
+   526 ;; This function uses a non-reentrant model
+   527 ;;
+   528                           
+   529                           	psect	text5
+   530  0004A4                     __ptext5:
+   531                           	opt stack 0
+   532  0004A4                     _WriteTimer0:
+   533                           	opt stack 24
+   534                           
+   535                           ;incstack = 0
+   536  0004A4  C013  F015         	movff	WriteTimer0@timer0,WriteTimer0@timer
+   537  0004A8  C014  F016         	movff	WriteTimer0@timer0+1,WriteTimer0@timer+1
+   538  0004AC  C016  FFD7         	movff	WriteTimer0@timer+1,4055	;volatile
+   539  0004B0  C015  FFD6         	movff	WriteTimer0@timer,4054	;volatile
+   540  0004B4  0012               	return		;funcret
+   541  0004B6                     __end_of_WriteTimer0:
+   542                           	opt stack 0
+   543                           intcon	equ	0xFF2
+   544                           intcon2	equ	0xFF1
+   545                           postinc0	equ	0xFEE
+   546                           wreg	equ	0xFE8
+   547                           status	equ	0xFD8
+   548                           
+   549 ;; *************** function _IO_LED_configure *****************
+   550 ;; Defined at:
+   551 ;;		line 5 in file "IO_LED.c"
+   552 ;; Parameters:    Size  Location     Type
+   553 ;;		None
+   554 ;; Auto vars:     Size  Location     Type
+   555 ;;		None
+   556 ;; Return value:  Size  Location     Type
+   557 ;;                  1    wreg      void 
+   558 ;; Registers used:
+   559 ;;		None
+   560 ;; Tracked objects:
+   561 ;;		On entry : 0/0
+   562 ;;		On exit  : 0/0
+   563 ;;		Unchanged: 0/0
+   564 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   565 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   566 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   567 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   568 ;;      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   569 ;;Total ram usage:        0 bytes
+   570 ;; Hardware stack levels used:    1
+   571 ;; Hardware stack levels required when called:    4
+   572 ;; This function calls:
+   573 ;;		Nothing
+   574 ;; This function is called by:
+   575 ;;		_main
+   576 ;; This function uses a non-reentrant model
+   577 ;;
+   578                           
+   579                           	psect	text6
+   580  000500                     __ptext6:
+   581                           	opt stack 0
+   582  000500                     _IO_LED_configure:
+   583                           	opt stack 26
+   584                           
+   585                           ;IO_LED.c: 7: TRISHbits.TRISH0 = 0;
+   586                           
+   587                           ;incstack = 0
+   588  000500  9099               	bcf	3993,0,c	;volatile
+   589                           
+   590                           ;IO_LED.c: 8: TRISHbits.TRISH1 = 0;
+   591  000502  9299               	bcf	3993,1,c	;volatile
+   592                           
+   593                           ;IO_LED.c: 9: TRISHbits.TRISH2 = 0;
+   594  000504  9499               	bcf	3993,2,c	;volatile
+   595                           
+   596                           ;IO_LED.c: 10: TRISHbits.TRISH3 = 0;
+   597  000506  9699               	bcf	3993,3,c	;volatile
+   598  000508  0012               	return		;funcret
+   599  00050A                     __end_of_IO_LED_configure:
+   600                           	opt stack 0
+   601                           intcon	equ	0xFF2
+   602                           intcon2	equ	0xFF1
+   603                           postinc0	equ	0xFEE
+   604                           wreg	equ	0xFE8
+   605                           status	equ	0xFD8
+   606                           
+   607 ;; *************** function _IO_LCD_WriteChar *****************
+   608 ;; Defined at:
+   609 ;;		line 228 in file "IO_LCD.c"
+   610 ;; Parameters:    Size  Location     Type
+   611 ;;  character       1    wreg     unsigned char 
+   612 ;; Auto vars:     Size  Location     Type
+   613 ;;  character       1   21[COMRAM] unsigned char 
+   614 ;; Return value:  Size  Location     Type
+   615 ;;                  1    wreg      void 
+   616 ;; Registers used:
+   617 ;;		wreg, status,2, status,0, cstack
+   618 ;; Tracked objects:
+   619 ;;		On entry : 0/0
+   620 ;;		On exit  : 0/0
+   621 ;;		Unchanged: 0/0
+   622 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   623 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   624 ;;      Locals:         1       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   625 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   626 ;;      Totals:         1       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   627 ;;Total ram usage:        1 bytes
+   628 ;; Hardware stack levels used:    1
+   629 ;; Hardware stack levels required when called:    5
+   630 ;; This function calls:
+   631 ;;		_write_data
+   632 ;; This function is called by:
+   633 ;;		_main
+   634 ;; This function uses a non-reentrant model
+   635 ;;
+   636                           
+   637                           	psect	text7
+   638  0004C8                     __ptext7:
+   639                           	opt stack 0
+   640  0004C8                     _IO_LCD_WriteChar:
+   641                           	opt stack 25
+   642                           
+   643                           ;incstack = 0
+   644                           ;IO_LCD_WriteChar@character stored from wreg
+   645  0004C8  6E16               	movwf	IO_LCD_WriteChar@character,c
+   646                           
+   647                           ;IO_LCD.c: 230: write_data(character);
+   648  0004CA  5016               	movf	IO_LCD_WriteChar@character,w,c
+   649  0004CC  EC0D  F000         	call	_write_data
+   650                           
+   651                           ;IO_LCD.c: 231: _delay((unsigned long)((60)*(10000000/4000000.0)));
+   652  0004D0  0E32               	movlw	50
+   653  0004D2                     u457:
+   654  0004D2  2EE8               	decfsz	wreg,f,c
+   655  0004D4  D7FE               	goto	u457
+   656  0004D6  0012               	return		;funcret
+   657  0004D8                     __end_of_IO_LCD_WriteChar:
+   658                           	opt stack 0
+   659                           intcon	equ	0xFF2
+   660                           intcon2	equ	0xFF1
+   661                           postinc0	equ	0xFEE
+   662                           wreg	equ	0xFE8
+   663                           status	equ	0xFD8
+   664                           
+   665 ;; *************** function _write_data *****************
+   666 ;; Defined at:
+   667 ;;		line 92 in file "IO_LCD.c"
+   668 ;; Parameters:    Size  Location     Type
+   669 ;;  data            1    wreg     unsigned char 
+   670 ;; Auto vars:     Size  Location     Type
+   671 ;;  data            1   20[COMRAM] unsigned char 
+   672 ;; Return value:  Size  Location     Type
+   673 ;;                  1    wreg      void 
+   674 ;; Registers used:
+   675 ;;		wreg, status,2, status,0
+   676 ;; Tracked objects:
+   677 ;;		On entry : 0/0
+   678 ;;		On exit  : 0/0
+   679 ;;		Unchanged: 0/0
+   680 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   681 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   682 ;;      Locals:         1       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   683 ;;      Temps:          2       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   684 ;;      Totals:         3       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   685 ;;Total ram usage:        3 bytes
+   686 ;; Hardware stack levels used:    1
+   687 ;; Hardware stack levels required when called:    4
+   688 ;; This function calls:
+   689 ;;		Nothing
+   690 ;; This function is called by:
+   691 ;;		_IO_LCD_WriteChar
+   692 ;; This function uses a non-reentrant model
+   693 ;;
+   694                           
+   695                           	psect	text8
+   696  00001A                     __ptext8:
+   697                           	opt stack 0
+   698  00001A                     _write_data:
+   699                           	opt stack 25
+   700                           
+   701                           ;incstack = 0
+   702                           ;write_data@data stored from wreg
+   703  00001A  6E15               	movwf	write_data@data,c
+   704                           
+   705                           ;IO_LCD.c: 96: LATHbits.LATH7 = 1;
+   706  00001C  8E90               	bsf	3984,7,c	;volatile
+   707                           
+   708                           ;IO_LCD.c: 98: LATJbits.LATJ7 = (data >> 7) & 0x01;
+   709  00001E  6A13               	clrf	??_write_data& (0+255),c
+   710  000020  AE15               	btfss	write_data@data,7,c
+   711  000022  D001               	bra	u95
+   712  000024  2A13               	incf	??_write_data& (0+255),f,c
+   713  000026                     u95:
+   714  000026  0E01               	movlw	1
+   715  000028  1613               	andwf	??_write_data,f,c
+   716  00002A  3213               	rrcf	??_write_data,f,c
+   717  00002C  3213               	rrcf	??_write_data,f,c
+   718  00002E  5091               	movf	3985,w,c	;volatile
+   719  000030  1813               	xorwf	??_write_data,w,c
+   720  000032  0B7F               	andlw	-129
+   721  000034  1813               	xorwf	??_write_data,w,c
+   722  000036  6E91               	movwf	3985,c	;volatile
+   723                           
+   724                           ;IO_LCD.c: 99: LATJbits.LATJ6 = (data >> 6) & 0x01;
+   725  000038  C015  F013         	movff	write_data@data,??_write_data
+   726  00003C  0E06               	movlw	6
+   727  00003E  6E14               	movwf	(??_write_data+1)& (0+255),c
+   728  000040                     u105:
+   729  000040  90D8               	bcf	status,0,c
+   730  000042  3213               	rrcf	??_write_data,f,c
+   731  000044  2E14               	decfsz	(??_write_data+1)& (0+255),f,c
+   732  000046  D7FC               	goto	u105
+   733  000048  0E01               	movlw	1
+   734  00004A  1613               	andwf	??_write_data,f,c
+   735  00004C  3A13               	swapf	??_write_data,f,c
+   736  00004E  4613               	rlncf	??_write_data,f,c
+   737  000050  4613               	rlncf	??_write_data,f,c
+   738  000052  5091               	movf	3985,w,c	;volatile
+   739  000054  1813               	xorwf	??_write_data,w,c
+   740  000056  0BBF               	andlw	-65
+   741  000058  1813               	xorwf	??_write_data,w,c
+   742  00005A  6E91               	movwf	3985,c	;volatile
+   743                           
+   744                           ;IO_LCD.c: 100: LATJbits.LATJ5 = (data >> 5) & 0x01;
+   745  00005C  C015  F013         	movff	write_data@data,??_write_data
+   746  000060  0E05               	movlw	5
+   747  000062  6E14               	movwf	(??_write_data+1)& (0+255),c
+   748  000064                     u115:
+   749  000064  90D8               	bcf	status,0,c
+   750  000066  3213               	rrcf	??_write_data,f,c
+   751  000068  2E14               	decfsz	(??_write_data+1)& (0+255),f,c
+   752  00006A  D7FC               	goto	u115
+   753  00006C  0E01               	movlw	1
+   754  00006E  1613               	andwf	??_write_data,f,c
+   755  000070  3A13               	swapf	??_write_data,f,c
+   756  000072  4613               	rlncf	??_write_data,f,c
+   757  000074  5091               	movf	3985,w,c	;volatile
+   758  000076  1813               	xorwf	??_write_data,w,c
+   759  000078  0BDF               	andlw	-33
+   760  00007A  1813               	xorwf	??_write_data,w,c
+   761  00007C  6E91               	movwf	3985,c	;volatile
+   762                           
+   763                           ;IO_LCD.c: 101: LATJbits.LATJ4 = (data >> 4) & 0x01;
+   764  00007E  C015  F013         	movff	write_data@data,??_write_data
+   765  000082  3A13               	swapf	??_write_data,f,c
+   766  000084  0E0F               	movlw	15
+   767  000086  1613               	andwf	??_write_data,f,c
+   768  000088  0E01               	movlw	1
+   769  00008A  1613               	andwf	??_write_data,f,c
+   770  00008C  3A13               	swapf	??_write_data,f,c
+   771  00008E  5091               	movf	3985,w,c	;volatile
+   772  000090  1813               	xorwf	??_write_data,w,c
+   773  000092  0BEF               	andlw	-17
+   774  000094  1813               	xorwf	??_write_data,w,c
+   775  000096  6E91               	movwf	3985,c	;volatile
+   776                           
+   777                           ;IO_LCD.c: 102: LATJbits.LATJ3 = (data >> 3) & 0x01;
+   778  000098  C015  F013         	movff	write_data@data,??_write_data
+   779  00009C  90D8               	bcf	status,0,c
+   780  00009E  3213               	rrcf	??_write_data,f,c
+   781  0000A0  90D8               	bcf	status,0,c
+   782  0000A2  3213               	rrcf	??_write_data,f,c
+   783  0000A4  90D8               	bcf	status,0,c
+   784  0000A6  3213               	rrcf	??_write_data,f,c
+   785  0000A8  0E01               	movlw	1
+   786  0000AA  1613               	andwf	??_write_data,f,c
+   787  0000AC  4613               	rlncf	??_write_data,f,c
+   788  0000AE  4613               	rlncf	??_write_data,f,c
+   789  0000B0  4613               	rlncf	??_write_data,f,c
+   790  0000B2  5091               	movf	3985,w,c	;volatile
+   791  0000B4  1813               	xorwf	??_write_data,w,c
+   792  0000B6  0BF7               	andlw	-9
+   793  0000B8  1813               	xorwf	??_write_data,w,c
+   794  0000BA  6E91               	movwf	3985,c	;volatile
+   795                           
+   796                           ;IO_LCD.c: 103: LATJbits.LATJ2 = (data >> 2) & 0x01;
+   797  0000BC  C015  F013         	movff	write_data@data,??_write_data
+   798  0000C0  90D8               	bcf	status,0,c
+   799  0000C2  3213               	rrcf	??_write_data,f,c
+   800  0000C4  90D8               	bcf	status,0,c
+   801  0000C6  3213               	rrcf	??_write_data,f,c
+   802  0000C8  0E01               	movlw	1
+   803  0000CA  1613               	andwf	??_write_data,f,c
+   804  0000CC  4613               	rlncf	??_write_data,f,c
+   805  0000CE  4613               	rlncf	??_write_data,f,c
+   806  0000D0  5091               	movf	3985,w,c	;volatile
+   807  0000D2  1813               	xorwf	??_write_data,w,c
+   808  0000D4  0BFB               	andlw	-5
+   809  0000D6  1813               	xorwf	??_write_data,w,c
+   810  0000D8  6E91               	movwf	3985,c	;volatile
+   811                           
+   812                           ;IO_LCD.c: 104: LATJbits.LATJ1 = (data >> 1) & 0x01;
+   813  0000DA  C015  F013         	movff	write_data@data,??_write_data
+   814  0000DE  90D8               	bcf	status,0,c
+   815  0000E0  3213               	rrcf	??_write_data,f,c
+   816  0000E2  0E01               	movlw	1
+   817  0000E4  1613               	andwf	??_write_data,f,c
+   818  0000E6  4613               	rlncf	??_write_data,f,c
+   819  0000E8  5091               	movf	3985,w,c	;volatile
+   820  0000EA  1813               	xorwf	??_write_data,w,c
+   821  0000EC  0BFD               	andlw	-3
+   822  0000EE  1813               	xorwf	??_write_data,w,c
+   823  0000F0  6E91               	movwf	3985,c	;volatile
+   824                           
+   825                           ;IO_LCD.c: 105: LATJbits.LATJ0 = data & 0x01;
+   826  0000F2  C015  F013         	movff	write_data@data,??_write_data
+   827  0000F6  0E01               	movlw	1
+   828  0000F8  1613               	andwf	??_write_data,f,c
+   829  0000FA  5091               	movf	3985,w,c	;volatile
+   830  0000FC  1813               	xorwf	??_write_data,w,c
+   831  0000FE  0BFE               	andlw	-2
+   832  000100  1813               	xorwf	??_write_data,w,c
+   833  000102  6E91               	movwf	3985,c	;volatile
+   834                           
+   835                           ;IO_LCD.c: 107: LATHbits.LATH6 = 1;
+   836  000104  8C90               	bsf	3984,6,c	;volatile
+   837                           
+   838                           ;IO_LCD.c: 109: _delay((unsigned long)((20)*(10000000/4000000.0)));
+   839  000106  0E10               	movlw	16
+   840  000108                     u467:
+   841  000108  2EE8               	decfsz	wreg,f,c
+   842  00010A  D7FE               	goto	u467
+   843  00010C  D000               	nop2		;nop
+   844                           
+   845                           ;IO_LCD.c: 111: LATHbits.LATH6 = 0;
+   846  00010E  9C90               	bcf	3984,6,c	;volatile
+   847                           
+   848                           ;IO_LCD.c: 113: _delay((unsigned long)((20)*(10000000/4000000.0)));
+   849  000110  0E10               	movlw	16
+   850  000112                     u477:
+   851  000112  2EE8               	decfsz	wreg,f,c
+   852  000114  D7FE               	goto	u477
+   853  000116  D000               	nop2		;nop
+   854  000118  0012               	return		;funcret
+   855  00011A                     __end_of_write_data:
+   856                           	opt stack 0
+   857                           intcon	equ	0xFF2
+   858                           intcon2	equ	0xFF1
+   859                           postinc0	equ	0xFEE
+   860                           wreg	equ	0xFE8
+   861                           status	equ	0xFD8
+   862                           
+   863 ;; *************** function _IO_LCD_Init *****************
+   864 ;; Defined at:
+   865 ;;		line 151 in file "IO_LCD.c"
+   866 ;; Parameters:    Size  Location     Type
+   867 ;;		None
+   868 ;; Auto vars:     Size  Location     Type
+   869 ;;		None
+   870 ;; Return value:  Size  Location     Type
+   871 ;;                  1    wreg      void 
+   872 ;; Registers used:
+   873 ;;		wreg, status,2, status,0, cstack
+   874 ;; Tracked objects:
+   875 ;;		On entry : 0/0
+   876 ;;		On exit  : 0/0
+   877 ;;		Unchanged: 0/0
+   878 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+   879 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   880 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   881 ;;      Temps:          1       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   882 ;;      Totals:         1       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+   883 ;;Total ram usage:        1 bytes
+   884 ;; Hardware stack levels used:    1
+   885 ;; Hardware stack levels required when called:    5
+   886 ;; This function calls:
+   887 ;;		_write_cmd
+   888 ;;		_write_port
+   889 ;; This function is called by:
+   890 ;;		_main
+   891 ;; This function uses a non-reentrant model
+   892 ;;
+   893                           
+   894                           	psect	text9
+   895  000304                     __ptext9:
+   896                           	opt stack 0
+   897  000304                     _IO_LCD_Init:
+   898                           	opt stack 25
+   899                           
+   900                           ;IO_LCD.c: 155: TRISJbits.TRISJ7 = 0;
+   901                           
+   902                           ;incstack = 0
+   903  000304  9E9A               	bcf	3994,7,c	;volatile
+   904                           
+   905                           ;IO_LCD.c: 156: TRISJbits.TRISJ6 = 0;
+   906  000306  9C9A               	bcf	3994,6,c	;volatile
+   907                           
+   908                           ;IO_LCD.c: 157: TRISJbits.TRISJ5 = 0;
+   909  000308  9A9A               	bcf	3994,5,c	;volatile
+   910                           
+   911                           ;IO_LCD.c: 158: TRISJbits.TRISJ4 = 0;
+   912  00030A  989A               	bcf	3994,4,c	;volatile
+   913                           
+   914                           ;IO_LCD.c: 159: TRISJbits.TRISJ3 = 0;
+   915  00030C  969A               	bcf	3994,3,c	;volatile
+   916                           
+   917                           ;IO_LCD.c: 160: TRISJbits.TRISJ2 = 0;
+   918  00030E  949A               	bcf	3994,2,c	;volatile
+   919                           
+   920                           ;IO_LCD.c: 161: TRISJbits.TRISJ1 = 0;
+   921  000310  929A               	bcf	3994,1,c	;volatile
+   922                           
+   923                           ;IO_LCD.c: 162: TRISJbits.TRISJ0 = 0;
+   924  000312  909A               	bcf	3994,0,c	;volatile
+   925                           
+   926                           ;IO_LCD.c: 175: TRISHbits.TRISH6 = 0;
+   927  000314  9C99               	bcf	3993,6,c	;volatile
+   928                           
+   929                           ;IO_LCD.c: 176: TRISHbits.TRISH7 = 0;
+   930  000316  9E99               	bcf	3993,7,c	;volatile
+   931                           
+   932                           ;IO_LCD.c: 178: LATHbits.LATH6 = 0;
+   933  000318  9C90               	bcf	3984,6,c	;volatile
+   934                           
+   935                           ;IO_LCD.c: 179: LATHbits.LATH7 = 0;
+   936  00031A  9E90               	bcf	3984,7,c	;volatile
+   937                           
+   938                           ;IO_LCD.c: 181: write_port(0x00);
+   939  00031C  0E00               	movlw	0
+   940  00031E  EC0D  F001         	call	_write_port
+   941                           
+   942                           ;IO_LCD.c: 183: _delay((unsigned long)((40)*(10000000/4000.0)));
+   943  000322  0E82               	movlw	130
+   944  000324  6E16               	movwf	??_IO_LCD_Init& (0+255),c
+   945  000326  0EDE               	movlw	222
+   946  000328                     u487:
+   947  000328  2EE8               	decfsz	wreg,f,c
+   948  00032A  D7FE               	goto	u487
+   949  00032C  2E16               	decfsz	??_IO_LCD_Init& (0+255),f,c
+   950  00032E  D7FC               	goto	u487
+   951                           
+   952                           ;IO_LCD.c: 185: write_cmd(0x30);
+   953  000330  0E30               	movlw	48
+   954  000332  EC8D  F000         	call	_write_cmd
+   955                           
+   956                           ;IO_LCD.c: 186: _delay((unsigned long)((5)*(10000000/4000.0)));
+   957  000336  0E11               	movlw	17
+   958  000338  6E16               	movwf	??_IO_LCD_Init& (0+255),c
+   959  00033A  0E3A               	movlw	58
+   960  00033C                     u497:
+   961  00033C  2EE8               	decfsz	wreg,f,c
+   962  00033E  D7FE               	goto	u497
+   963  000340  2E16               	decfsz	??_IO_LCD_Init& (0+255),f,c
+   964  000342  D7FC               	goto	u497
+   965  000344  D000               	nop2	
+   966                           
+   967                           ;IO_LCD.c: 187: write_cmd(0x30);
+   968  000346  0E30               	movlw	48
+   969  000348  EC8D  F000         	call	_write_cmd
+   970                           
+   971                           ;IO_LCD.c: 188: _delay((unsigned long)((150)*(10000000/4000000.0)));
+   972  00034C  0E7D               	movlw	125
+   973  00034E                     u507:
+   974  00034E  2EE8               	decfsz	wreg,f,c
+   975  000350  D7FE               	goto	u507
+   976                           
+   977                           ;IO_LCD.c: 189: write_cmd(0x30);
+   978  000352  0E30               	movlw	48
+   979  000354  EC8D  F000         	call	_write_cmd
+   980                           
+   981                           ;IO_LCD.c: 190: _delay((unsigned long)((150)*(10000000/4000000.0)));
+   982  000358  0E7D               	movlw	125
+   983  00035A                     u517:
+   984  00035A  2EE8               	decfsz	wreg,f,c
+   985  00035C  D7FE               	goto	u517
+   986                           
+   987                           ;IO_LCD.c: 194: write_cmd(0x38);
+   988  00035E  0E38               	movlw	56
+   989  000360  EC8D  F000         	call	_write_cmd
+   990                           
+   991                           ;IO_LCD.c: 204: _delay((unsigned long)((60)*(10000000/4000000.0)));
+   992  000364  0E32               	movlw	50
+   993  000366                     u527:
+   994  000366  2EE8               	decfsz	wreg,f,c
+   995  000368  D7FE               	goto	u527
+   996                           
+   997                           ;IO_LCD.c: 205: write_cmd(0x08);
+   998  00036A  0E08               	movlw	8
+   999  00036C  EC8D  F000         	call	_write_cmd
+  1000                           
+  1001                           ;IO_LCD.c: 206: _delay((unsigned long)((60)*(10000000/4000000.0)));
+  1002  000370  0E32               	movlw	50
+  1003  000372                     u537:
+  1004  000372  2EE8               	decfsz	wreg,f,c
+  1005  000374  D7FE               	goto	u537
+  1006                           
+  1007                           ;IO_LCD.c: 207: write_cmd(0x01);
+  1008  000376  0E01               	movlw	1
+  1009  000378  EC8D  F000         	call	_write_cmd
+  1010                           
+  1011                           ;IO_LCD.c: 208: _delay((unsigned long)((4)*(10000000/4000.0)));
+  1012  00037C  0E0D               	movlw	13
+  1013  00037E  6E16               	movwf	??_IO_LCD_Init& (0+255),c
+  1014  000380  0EFC               	movlw	252
+  1015  000382                     u547:
+  1016  000382  2EE8               	decfsz	wreg,f,c
+  1017  000384  D7FE               	goto	u547
+  1018  000386  2E16               	decfsz	??_IO_LCD_Init& (0+255),f,c
+  1019  000388  D7FC               	goto	u547
+  1020                           
+  1021                           ;IO_LCD.c: 209: write_cmd(0x06);
+  1022  00038A  0E06               	movlw	6
+  1023  00038C  EC8D  F000         	call	_write_cmd
+  1024                           
+  1025                           ;IO_LCD.c: 210: _delay((unsigned long)((60)*(10000000/4000000.0)));
+  1026  000390  0E32               	movlw	50
+  1027  000392                     u557:
+  1028  000392  2EE8               	decfsz	wreg,f,c
+  1029  000394  D7FE               	goto	u557
+  1030                           
+  1031                           ;IO_LCD.c: 211: write_cmd(0x0C);
+  1032  000396  0E0C               	movlw	12
+  1033  000398  EC8D  F000         	call	_write_cmd
+  1034                           
+  1035                           ;IO_LCD.c: 212: _delay((unsigned long)((60)*(10000000/4000000.0)));
+  1036  00039C  0E32               	movlw	50
+  1037  00039E                     u567:
+  1038  00039E  2EE8               	decfsz	wreg,f,c
+  1039  0003A0  D7FE               	goto	u567
+  1040                           
+  1041                           ;IO_LCD.c: 214: lcd_state.blink_on = 0;
+  1042  0003A2  941A               	bcf	_lcd_state+2,2,c
+  1043                           
+  1044                           ;IO_LCD.c: 215: lcd_state.cursor_on = 0;
+  1045  0003A4  921A               	bcf	_lcd_state+2,1,c
+  1046                           
+  1047                           ;IO_LCD.c: 216: lcd_state.display_on = 1;
+  1048  0003A6  801A               	bsf	_lcd_state+2,0,c
+  1049                           
+  1050                           ;IO_LCD.c: 217: lcd_state.scroll_on = 0;
+  1051  0003A8  961A               	bcf	_lcd_state+2,3,c
+  1052                           
+  1053                           ;IO_LCD.c: 218: lcd_state.DDRAM_addr = 0x00;
+  1054  0003AA  0E00               	movlw	0
+  1055  0003AC  6E18               	movwf	_lcd_state,c
+  1056                           
+  1057                           ;IO_LCD.c: 219: lcd_state.CGRAM_addr = 0x00;
+  1058  0003AE  0E00               	movlw	0
+  1059  0003B0  6E19               	movwf	_lcd_state+1,c
+  1060  0003B2  0012               	return		;funcret
+  1061  0003B4                     __end_of_IO_LCD_Init:
+  1062                           	opt stack 0
+  1063                           intcon	equ	0xFF2
+  1064                           intcon2	equ	0xFF1
+  1065                           postinc0	equ	0xFEE
+  1066                           wreg	equ	0xFE8
+  1067                           status	equ	0xFD8
+  1068                           
+  1069 ;; *************** function _write_port *****************
+  1070 ;; Defined at:
+  1071 ;;		line 7 in file "IO_LCD.c"
+  1072 ;; Parameters:    Size  Location     Type
+  1073 ;;  data            1    wreg     unsigned char 
+  1074 ;; Auto vars:     Size  Location     Type
+  1075 ;;  data            1   20[COMRAM] unsigned char 
+  1076 ;; Return value:  Size  Location     Type
+  1077 ;;                  1    wreg      void 
+  1078 ;; Registers used:
+  1079 ;;		wreg, status,2, status,0
+  1080 ;; Tracked objects:
+  1081 ;;		On entry : 0/0
+  1082 ;;		On exit  : 0/0
+  1083 ;;		Unchanged: 0/0
+  1084 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+  1085 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1086 ;;      Locals:         1       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1087 ;;      Temps:          2       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1088 ;;      Totals:         3       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1089 ;;Total ram usage:        3 bytes
+  1090 ;; Hardware stack levels used:    1
+  1091 ;; Hardware stack levels required when called:    4
+  1092 ;; This function calls:
+  1093 ;;		Nothing
+  1094 ;; This function is called by:
+  1095 ;;		_IO_LCD_Init
+  1096 ;; This function uses a non-reentrant model
+  1097 ;;
+  1098                           
+  1099                           	psect	text10
+  1100  00021A                     __ptext10:
+  1101                           	opt stack 0
+  1102  00021A                     _write_port:
+  1103                           	opt stack 25
+  1104                           
+  1105                           ;incstack = 0
+  1106                           ;write_port@data stored from wreg
+  1107  00021A  6E15               	movwf	write_port@data,c
+  1108                           
+  1109                           ;IO_LCD.c: 11: LATJbits.LATJ7 = (data >> 7) & 0x01;
+  1110  00021C  6A13               	clrf	??_write_port& (0+255),c
+  1111  00021E  AE15               	btfss	write_port@data,7,c
+  1112  000220  D001               	bra	u35
+  1113  000222  2A13               	incf	??_write_port& (0+255),f,c
+  1114  000224                     u35:
+  1115  000224  0E01               	movlw	1
+  1116  000226  1613               	andwf	??_write_port,f,c
+  1117  000228  3213               	rrcf	??_write_port,f,c
+  1118  00022A  3213               	rrcf	??_write_port,f,c
+  1119  00022C  5091               	movf	3985,w,c	;volatile
+  1120  00022E  1813               	xorwf	??_write_port,w,c
+  1121  000230  0B7F               	andlw	-129
+  1122  000232  1813               	xorwf	??_write_port,w,c
+  1123  000234  6E91               	movwf	3985,c	;volatile
+  1124                           
+  1125                           ;IO_LCD.c: 12: LATJbits.LATJ6 = (data >> 6) & 0x01;
+  1126  000236  C015  F013         	movff	write_port@data,??_write_port
+  1127  00023A  0E06               	movlw	6
+  1128  00023C  6E14               	movwf	(??_write_port+1)& (0+255),c
+  1129  00023E                     u45:
+  1130  00023E  90D8               	bcf	status,0,c
+  1131  000240  3213               	rrcf	??_write_port,f,c
+  1132  000242  2E14               	decfsz	(??_write_port+1)& (0+255),f,c
+  1133  000244  D7FC               	goto	u45
+  1134  000246  0E01               	movlw	1
+  1135  000248  1613               	andwf	??_write_port,f,c
+  1136  00024A  3A13               	swapf	??_write_port,f,c
+  1137  00024C  4613               	rlncf	??_write_port,f,c
+  1138  00024E  4613               	rlncf	??_write_port,f,c
+  1139  000250  5091               	movf	3985,w,c	;volatile
+  1140  000252  1813               	xorwf	??_write_port,w,c
+  1141  000254  0BBF               	andlw	-65
+  1142  000256  1813               	xorwf	??_write_port,w,c
+  1143  000258  6E91               	movwf	3985,c	;volatile
+  1144                           
+  1145                           ;IO_LCD.c: 13: LATJbits.LATJ5 = (data >> 5) & 0x01;
+  1146  00025A  C015  F013         	movff	write_port@data,??_write_port
+  1147  00025E  0E05               	movlw	5
+  1148  000260  6E14               	movwf	(??_write_port+1)& (0+255),c
+  1149  000262                     u55:
+  1150  000262  90D8               	bcf	status,0,c
+  1151  000264  3213               	rrcf	??_write_port,f,c
+  1152  000266  2E14               	decfsz	(??_write_port+1)& (0+255),f,c
+  1153  000268  D7FC               	goto	u55
+  1154  00026A  0E01               	movlw	1
+  1155  00026C  1613               	andwf	??_write_port,f,c
+  1156  00026E  3A13               	swapf	??_write_port,f,c
+  1157  000270  4613               	rlncf	??_write_port,f,c
+  1158  000272  5091               	movf	3985,w,c	;volatile
+  1159  000274  1813               	xorwf	??_write_port,w,c
+  1160  000276  0BDF               	andlw	-33
+  1161  000278  1813               	xorwf	??_write_port,w,c
+  1162  00027A  6E91               	movwf	3985,c	;volatile
+  1163                           
+  1164                           ;IO_LCD.c: 14: LATJbits.LATJ4 = (data >> 4) & 0x01;
+  1165  00027C  C015  F013         	movff	write_port@data,??_write_port
+  1166  000280  3A13               	swapf	??_write_port,f,c
+  1167  000282  0E0F               	movlw	15
+  1168  000284  1613               	andwf	??_write_port,f,c
+  1169  000286  0E01               	movlw	1
+  1170  000288  1613               	andwf	??_write_port,f,c
+  1171  00028A  3A13               	swapf	??_write_port,f,c
+  1172  00028C  5091               	movf	3985,w,c	;volatile
+  1173  00028E  1813               	xorwf	??_write_port,w,c
+  1174  000290  0BEF               	andlw	-17
+  1175  000292  1813               	xorwf	??_write_port,w,c
+  1176  000294  6E91               	movwf	3985,c	;volatile
+  1177                           
+  1178                           ;IO_LCD.c: 15: LATJbits.LATJ3 = (data >> 3) & 0x01;
+  1179  000296  C015  F013         	movff	write_port@data,??_write_port
+  1180  00029A  90D8               	bcf	status,0,c
+  1181  00029C  3213               	rrcf	??_write_port,f,c
+  1182  00029E  90D8               	bcf	status,0,c
+  1183  0002A0  3213               	rrcf	??_write_port,f,c
+  1184  0002A2  90D8               	bcf	status,0,c
+  1185  0002A4  3213               	rrcf	??_write_port,f,c
+  1186  0002A6  0E01               	movlw	1
+  1187  0002A8  1613               	andwf	??_write_port,f,c
+  1188  0002AA  4613               	rlncf	??_write_port,f,c
+  1189  0002AC  4613               	rlncf	??_write_port,f,c
+  1190  0002AE  4613               	rlncf	??_write_port,f,c
+  1191  0002B0  5091               	movf	3985,w,c	;volatile
+  1192  0002B2  1813               	xorwf	??_write_port,w,c
+  1193  0002B4  0BF7               	andlw	-9
+  1194  0002B6  1813               	xorwf	??_write_port,w,c
+  1195  0002B8  6E91               	movwf	3985,c	;volatile
+  1196                           
+  1197                           ;IO_LCD.c: 16: LATJbits.LATJ2 = (data >> 2) & 0x01;
+  1198  0002BA  C015  F013         	movff	write_port@data,??_write_port
+  1199  0002BE  90D8               	bcf	status,0,c
+  1200  0002C0  3213               	rrcf	??_write_port,f,c
+  1201  0002C2  90D8               	bcf	status,0,c
+  1202  0002C4  3213               	rrcf	??_write_port,f,c
+  1203  0002C6  0E01               	movlw	1
+  1204  0002C8  1613               	andwf	??_write_port,f,c
+  1205  0002CA  4613               	rlncf	??_write_port,f,c
+  1206  0002CC  4613               	rlncf	??_write_port,f,c
+  1207  0002CE  5091               	movf	3985,w,c	;volatile
+  1208  0002D0  1813               	xorwf	??_write_port,w,c
+  1209  0002D2  0BFB               	andlw	-5
+  1210  0002D4  1813               	xorwf	??_write_port,w,c
+  1211  0002D6  6E91               	movwf	3985,c	;volatile
+  1212                           
+  1213                           ;IO_LCD.c: 17: LATJbits.LATJ1 = (data >> 1) & 0x01;
+  1214  0002D8  C015  F013         	movff	write_port@data,??_write_port
+  1215  0002DC  90D8               	bcf	status,0,c
+  1216  0002DE  3213               	rrcf	??_write_port,f,c
+  1217  0002E0  0E01               	movlw	1
+  1218  0002E2  1613               	andwf	??_write_port,f,c
+  1219  0002E4  4613               	rlncf	??_write_port,f,c
+  1220  0002E6  5091               	movf	3985,w,c	;volatile
+  1221  0002E8  1813               	xorwf	??_write_port,w,c
+  1222  0002EA  0BFD               	andlw	-3
+  1223  0002EC  1813               	xorwf	??_write_port,w,c
+  1224  0002EE  6E91               	movwf	3985,c	;volatile
+  1225                           
+  1226                           ;IO_LCD.c: 18: LATJbits.LATJ0 = data & 0x01;
+  1227  0002F0  C015  F013         	movff	write_port@data,??_write_port
+  1228  0002F4  0E01               	movlw	1
+  1229  0002F6  1613               	andwf	??_write_port,f,c
+  1230  0002F8  5091               	movf	3985,w,c	;volatile
+  1231  0002FA  1813               	xorwf	??_write_port,w,c
+  1232  0002FC  0BFE               	andlw	-2
+  1233  0002FE  1813               	xorwf	??_write_port,w,c
+  1234  000300  6E91               	movwf	3985,c	;volatile
+  1235  000302  0012               	return		;funcret
+  1236  000304                     __end_of_write_port:
+  1237                           	opt stack 0
+  1238                           intcon	equ	0xFF2
+  1239                           intcon2	equ	0xFF1
+  1240                           postinc0	equ	0xFEE
+  1241                           wreg	equ	0xFE8
+  1242                           status	equ	0xFD8
+  1243                           
+  1244 ;; *************** function _write_cmd *****************
+  1245 ;; Defined at:
+  1246 ;;		line 33 in file "IO_LCD.c"
+  1247 ;; Parameters:    Size  Location     Type
+  1248 ;;  cmd             1    wreg     unsigned char 
+  1249 ;; Auto vars:     Size  Location     Type
+  1250 ;;  cmd             1   20[COMRAM] unsigned char 
+  1251 ;; Return value:  Size  Location     Type
+  1252 ;;                  1    wreg      void 
+  1253 ;; Registers used:
+  1254 ;;		wreg, status,2, status,0
+  1255 ;; Tracked objects:
+  1256 ;;		On entry : 0/0
+  1257 ;;		On exit  : 0/0
+  1258 ;;		Unchanged: 0/0
+  1259 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+  1260 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1261 ;;      Locals:         1       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1262 ;;      Temps:          2       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1263 ;;      Totals:         3       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1264 ;;Total ram usage:        3 bytes
+  1265 ;; Hardware stack levels used:    1
+  1266 ;; Hardware stack levels required when called:    4
+  1267 ;; This function calls:
+  1268 ;;		Nothing
+  1269 ;; This function is called by:
+  1270 ;;		_IO_LCD_Init
+  1271 ;; This function uses a non-reentrant model
+  1272 ;;
+  1273                           
+  1274                           	psect	text11
+  1275  00011A                     __ptext11:
+  1276                           	opt stack 0
+  1277  00011A                     _write_cmd:
+  1278                           	opt stack 25
+  1279                           
+  1280                           ;incstack = 0
+  1281                           ;write_cmd@cmd stored from wreg
+  1282  00011A  6E15               	movwf	write_cmd@cmd,c
+  1283                           
+  1284                           ;IO_LCD.c: 37: LATHbits.LATH7 = 0;
+  1285  00011C  9E90               	bcf	3984,7,c	;volatile
+  1286                           
+  1287                           ;IO_LCD.c: 39: LATJbits.LATJ7 = (cmd >> 7) & 0x01;
+  1288  00011E  6A13               	clrf	??_write_cmd& (0+255),c
+  1289  000120  AE15               	btfss	write_cmd@cmd,7,c
+  1290  000122  D001               	bra	u65
+  1291  000124  2A13               	incf	??_write_cmd& (0+255),f,c
+  1292  000126                     u65:
+  1293  000126  0E01               	movlw	1
+  1294  000128  1613               	andwf	??_write_cmd,f,c
+  1295  00012A  3213               	rrcf	??_write_cmd,f,c
+  1296  00012C  3213               	rrcf	??_write_cmd,f,c
+  1297  00012E  5091               	movf	3985,w,c	;volatile
+  1298  000130  1813               	xorwf	??_write_cmd,w,c
+  1299  000132  0B7F               	andlw	-129
+  1300  000134  1813               	xorwf	??_write_cmd,w,c
+  1301  000136  6E91               	movwf	3985,c	;volatile
+  1302                           
+  1303                           ;IO_LCD.c: 40: LATJbits.LATJ6 = (cmd >> 6) & 0x01;
+  1304  000138  C015  F013         	movff	write_cmd@cmd,??_write_cmd
+  1305  00013C  0E06               	movlw	6
+  1306  00013E  6E14               	movwf	(??_write_cmd+1)& (0+255),c
+  1307  000140                     u75:
+  1308  000140  90D8               	bcf	status,0,c
+  1309  000142  3213               	rrcf	??_write_cmd,f,c
+  1310  000144  2E14               	decfsz	(??_write_cmd+1)& (0+255),f,c
+  1311  000146  D7FC               	goto	u75
+  1312  000148  0E01               	movlw	1
+  1313  00014A  1613               	andwf	??_write_cmd,f,c
+  1314  00014C  3A13               	swapf	??_write_cmd,f,c
+  1315  00014E  4613               	rlncf	??_write_cmd,f,c
+  1316  000150  4613               	rlncf	??_write_cmd,f,c
+  1317  000152  5091               	movf	3985,w,c	;volatile
+  1318  000154  1813               	xorwf	??_write_cmd,w,c
+  1319  000156  0BBF               	andlw	-65
+  1320  000158  1813               	xorwf	??_write_cmd,w,c
+  1321  00015A  6E91               	movwf	3985,c	;volatile
+  1322                           
+  1323                           ;IO_LCD.c: 41: LATJbits.LATJ5 = (cmd >> 5) & 0x01;
+  1324  00015C  C015  F013         	movff	write_cmd@cmd,??_write_cmd
+  1325  000160  0E05               	movlw	5
+  1326  000162  6E14               	movwf	(??_write_cmd+1)& (0+255),c
+  1327  000164                     u85:
+  1328  000164  90D8               	bcf	status,0,c
+  1329  000166  3213               	rrcf	??_write_cmd,f,c
+  1330  000168  2E14               	decfsz	(??_write_cmd+1)& (0+255),f,c
+  1331  00016A  D7FC               	goto	u85
+  1332  00016C  0E01               	movlw	1
+  1333  00016E  1613               	andwf	??_write_cmd,f,c
+  1334  000170  3A13               	swapf	??_write_cmd,f,c
+  1335  000172  4613               	rlncf	??_write_cmd,f,c
+  1336  000174  5091               	movf	3985,w,c	;volatile
+  1337  000176  1813               	xorwf	??_write_cmd,w,c
+  1338  000178  0BDF               	andlw	-33
+  1339  00017A  1813               	xorwf	??_write_cmd,w,c
+  1340  00017C  6E91               	movwf	3985,c	;volatile
+  1341                           
+  1342                           ;IO_LCD.c: 42: LATJbits.LATJ4 = (cmd >> 4) & 0x01;
+  1343  00017E  C015  F013         	movff	write_cmd@cmd,??_write_cmd
+  1344  000182  3A13               	swapf	??_write_cmd,f,c
+  1345  000184  0E0F               	movlw	15
+  1346  000186  1613               	andwf	??_write_cmd,f,c
+  1347  000188  0E01               	movlw	1
+  1348  00018A  1613               	andwf	??_write_cmd,f,c
+  1349  00018C  3A13               	swapf	??_write_cmd,f,c
+  1350  00018E  5091               	movf	3985,w,c	;volatile
+  1351  000190  1813               	xorwf	??_write_cmd,w,c
+  1352  000192  0BEF               	andlw	-17
+  1353  000194  1813               	xorwf	??_write_cmd,w,c
+  1354  000196  6E91               	movwf	3985,c	;volatile
+  1355                           
+  1356                           ;IO_LCD.c: 43: LATJbits.LATJ3 = (cmd >> 3) & 0x01;
+  1357  000198  C015  F013         	movff	write_cmd@cmd,??_write_cmd
+  1358  00019C  90D8               	bcf	status,0,c
+  1359  00019E  3213               	rrcf	??_write_cmd,f,c
+  1360  0001A0  90D8               	bcf	status,0,c
+  1361  0001A2  3213               	rrcf	??_write_cmd,f,c
+  1362  0001A4  90D8               	bcf	status,0,c
+  1363  0001A6  3213               	rrcf	??_write_cmd,f,c
+  1364  0001A8  0E01               	movlw	1
+  1365  0001AA  1613               	andwf	??_write_cmd,f,c
+  1366  0001AC  4613               	rlncf	??_write_cmd,f,c
+  1367  0001AE  4613               	rlncf	??_write_cmd,f,c
+  1368  0001B0  4613               	rlncf	??_write_cmd,f,c
+  1369  0001B2  5091               	movf	3985,w,c	;volatile
+  1370  0001B4  1813               	xorwf	??_write_cmd,w,c
+  1371  0001B6  0BF7               	andlw	-9
+  1372  0001B8  1813               	xorwf	??_write_cmd,w,c
+  1373  0001BA  6E91               	movwf	3985,c	;volatile
+  1374                           
+  1375                           ;IO_LCD.c: 44: LATJbits.LATJ2 = (cmd >> 2) & 0x01;
+  1376  0001BC  C015  F013         	movff	write_cmd@cmd,??_write_cmd
+  1377  0001C0  90D8               	bcf	status,0,c
+  1378  0001C2  3213               	rrcf	??_write_cmd,f,c
+  1379  0001C4  90D8               	bcf	status,0,c
+  1380  0001C6  3213               	rrcf	??_write_cmd,f,c
+  1381  0001C8  0E01               	movlw	1
+  1382  0001CA  1613               	andwf	??_write_cmd,f,c
+  1383  0001CC  4613               	rlncf	??_write_cmd,f,c
+  1384  0001CE  4613               	rlncf	??_write_cmd,f,c
+  1385  0001D0  5091               	movf	3985,w,c	;volatile
+  1386  0001D2  1813               	xorwf	??_write_cmd,w,c
+  1387  0001D4  0BFB               	andlw	-5
+  1388  0001D6  1813               	xorwf	??_write_cmd,w,c
+  1389  0001D8  6E91               	movwf	3985,c	;volatile
+  1390                           
+  1391                           ;IO_LCD.c: 45: LATJbits.LATJ1 = (cmd >> 1) & 0x01;
+  1392  0001DA  C015  F013         	movff	write_cmd@cmd,??_write_cmd
+  1393  0001DE  90D8               	bcf	status,0,c
+  1394  0001E0  3213               	rrcf	??_write_cmd,f,c
+  1395  0001E2  0E01               	movlw	1
+  1396  0001E4  1613               	andwf	??_write_cmd,f,c
+  1397  0001E6  4613               	rlncf	??_write_cmd,f,c
+  1398  0001E8  5091               	movf	3985,w,c	;volatile
+  1399  0001EA  1813               	xorwf	??_write_cmd,w,c
+  1400  0001EC  0BFD               	andlw	-3
+  1401  0001EE  1813               	xorwf	??_write_cmd,w,c
+  1402  0001F0  6E91               	movwf	3985,c	;volatile
+  1403                           
+  1404                           ;IO_LCD.c: 46: LATJbits.LATJ0 = cmd & 0x01;
+  1405  0001F2  C015  F013         	movff	write_cmd@cmd,??_write_cmd
+  1406  0001F6  0E01               	movlw	1
+  1407  0001F8  1613               	andwf	??_write_cmd,f,c
+  1408  0001FA  5091               	movf	3985,w,c	;volatile
+  1409  0001FC  1813               	xorwf	??_write_cmd,w,c
+  1410  0001FE  0BFE               	andlw	-2
+  1411  000200  1813               	xorwf	??_write_cmd,w,c
+  1412  000202  6E91               	movwf	3985,c	;volatile
+  1413                           
+  1414                           ;IO_LCD.c: 48: LATHbits.LATH6 = 1;
+  1415  000204  8C90               	bsf	3984,6,c	;volatile
+  1416                           
+  1417                           ;IO_LCD.c: 50: _delay((unsigned long)((20)*(10000000/4000000.0)));
+  1418  000206  0E10               	movlw	16
+  1419  000208                     u577:
+  1420  000208  2EE8               	decfsz	wreg,f,c
+  1421  00020A  D7FE               	goto	u577
+  1422  00020C  D000               	nop2		;nop
+  1423                           
+  1424                           ;IO_LCD.c: 52: LATHbits.LATH6 = 0;
+  1425  00020E  9C90               	bcf	3984,6,c	;volatile
+  1426                           
+  1427                           ;IO_LCD.c: 54: _delay((unsigned long)((20)*(10000000/4000000.0)));
+  1428  000210  0E10               	movlw	16
+  1429  000212                     u587:
+  1430  000212  2EE8               	decfsz	wreg,f,c
+  1431  000214  D7FE               	goto	u587
+  1432  000216  D000               	nop2		;nop
+  1433  000218  0012               	return		;funcret
+  1434  00021A                     __end_of_write_cmd:
+  1435                           	opt stack 0
+  1436                           intcon	equ	0xFF2
+  1437                           intcon2	equ	0xFF1
+  1438                           postinc0	equ	0xFEE
+  1439                           wreg	equ	0xFE8
+  1440                           status	equ	0xFD8
+  1441                           
+  1442 ;; *************** function _ISR *****************
+  1443 ;; Defined at:
+  1444 ;;		line 12 in file "test.c"
+  1445 ;; Parameters:    Size  Location     Type
+  1446 ;;		None
+  1447 ;; Auto vars:     Size  Location     Type
+  1448 ;;		None
+  1449 ;; Return value:  Size  Location     Type
+  1450 ;;                  1    wreg      void 
+  1451 ;; Registers used:
+  1452 ;;		status,2, status,0, cstack
+  1453 ;; Tracked objects:
+  1454 ;;		On entry : 0/0
+  1455 ;;		On exit  : 0/0
+  1456 ;;		Unchanged: 0/0
+  1457 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+  1458 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1459 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1460 ;;      Temps:         14       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1461 ;;      Totals:        14       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1462 ;;Total ram usage:       14 bytes
+  1463 ;; Hardware stack levels used:    1
+  1464 ;; Hardware stack levels required when called:    3
+  1465 ;; This function calls:
+  1466 ;;		_TMR_SysTick_ISR
+  1467 ;; This function is called by:
+  1468 ;;		Interrupt level 2
+  1469 ;; This function uses a non-reentrant model
+  1470 ;;
+  1471                           
+  1472                           	psect	intcode
+  1473  000008                     __pintcode:
+  1474                           	opt stack 0
+  1475  000008                     _ISR:
+  1476                           	opt stack 23
+  1477                           
+  1478                           ;incstack = 0
+  1479  000008  8223               	bsf	btemp,1,c	;set compiler interrupt flag (level 2)
+  1480  00000A  CFFA F005          	movff	pclath,??_ISR
+  1481  00000E  CFFB F006          	movff	pclatu,??_ISR+1
+  1482  000012  EDDA  F001         	call	int_func,f	;refresh shadow registers
+  1483                           pclatu	equ	0xFFB
+  1484                           pclath	equ	0xFFA
+  1485                           intcon	equ	0xFF2
+  1486                           intcon2	equ	0xFF1
+  1487                           postinc0	equ	0xFEE
+  1488                           wreg	equ	0xFE8
+  1489                           status	equ	0xFD8
+  1490                           
+  1491                           	psect	intcode_body
+  1492  0003B4                     __pintcode_body:
+  1493                           	opt stack 23
+  1494  0003B4                     int_func:
+  1495                           	opt stack 23
+  1496  0003B4  0006               	pop		; remove dummy address from shadow register refresh
+  1497  0003B6  CFE9 F007          	movff	fsr0l,??_ISR+2
+  1498  0003BA  CFEA F008          	movff	fsr0h,??_ISR+3
+  1499  0003BE  CFE1 F009          	movff	fsr1l,??_ISR+4
+  1500  0003C2  CFE2 F00A          	movff	fsr1h,??_ISR+5
+  1501  0003C6  CFD9 F00B          	movff	fsr2l,??_ISR+6
+  1502  0003CA  CFDA F00C          	movff	fsr2h,??_ISR+7
+  1503  0003CE  CFF3 F00D          	movff	prodl,??_ISR+8
+  1504  0003D2  CFF4 F00E          	movff	prodh,??_ISR+9
+  1505  0003D6  CFF6 F00F          	movff	tblptrl,??_ISR+10
+  1506  0003DA  CFF7 F010          	movff	tblptrh,??_ISR+11
+  1507  0003DE  CFF8 F011          	movff	tblptru,??_ISR+12
+  1508  0003E2  CFF5 F012          	movff	tablat,??_ISR+13
+  1509                           
+  1510                           ;test.c: 14: if(INTCONbits.TMR0IF == 1) {
+  1511  0003E6  B4F2               	btfsc	intcon,2,c	;volatile
+  1512                           
+  1513                           ;test.c: 15: TMR_SysTick_ISR();
+  1514  0003E8  EC7A  F002         	call	_TMR_SysTick_ISR	;wreg free
+  1515  0003EC  C012  FFF5         	movff	??_ISR+13,tablat
+  1516  0003F0  C011  FFF8         	movff	??_ISR+12,tblptru
+  1517  0003F4  C010  FFF7         	movff	??_ISR+11,tblptrh
+  1518  0003F8  C00F  FFF6         	movff	??_ISR+10,tblptrl
+  1519  0003FC  C00E  FFF4         	movff	??_ISR+9,prodh
+  1520  000400  C00D  FFF3         	movff	??_ISR+8,prodl
+  1521  000404  C00C  FFDA         	movff	??_ISR+7,fsr2h
+  1522  000408  C00B  FFD9         	movff	??_ISR+6,fsr2l
+  1523  00040C  C00A  FFE2         	movff	??_ISR+5,fsr1h
+  1524  000410  C009  FFE1         	movff	??_ISR+4,fsr1l
+  1525  000414  C008  FFEA         	movff	??_ISR+3,fsr0h
+  1526  000418  C007  FFE9         	movff	??_ISR+2,fsr0l
+  1527  00041C  C006  FFFB         	movff	??_ISR+1,pclatu
+  1528  000420  C005  FFFA         	movff	??_ISR,pclath
+  1529  000424  9223               	bcf	btemp,1,c	;clear compiler interrupt flag (level 2)
+  1530  000426  0011               	retfie		f
+  1531  000428                     __end_of_ISR:
+  1532                           	opt stack 0
+  1533                           pclatu	equ	0xFFB
+  1534                           pclath	equ	0xFFA
+  1535                           tblptru	equ	0xFF8
+  1536                           tblptrh	equ	0xFF7
+  1537                           tblptrl	equ	0xFF6
+  1538                           tablat	equ	0xFF5
+  1539                           prodh	equ	0xFF4
+  1540                           prodl	equ	0xFF3
+  1541                           intcon	equ	0xFF2
+  1542                           intcon2	equ	0xFF1
+  1543                           postinc0	equ	0xFEE
+  1544                           fsr0h	equ	0xFEA
+  1545                           fsr0l	equ	0xFE9
+  1546                           wreg	equ	0xFE8
+  1547                           fsr1h	equ	0xFE2
+  1548                           fsr1l	equ	0xFE1
+  1549                           fsr2h	equ	0xFDA
+  1550                           fsr2l	equ	0xFD9
+  1551                           status	equ	0xFD8
+  1552                           
+  1553 ;; *************** function _TMR_SysTick_ISR *****************
+  1554 ;; Defined at:
+  1555 ;;		line 11 in file "TMR_SysTick.c"
+  1556 ;; Parameters:    Size  Location     Type
+  1557 ;;		None
+  1558 ;; Auto vars:     Size  Location     Type
+  1559 ;;		None
+  1560 ;; Return value:  Size  Location     Type
+  1561 ;;                  1    wreg      void 
+  1562 ;; Registers used:
+  1563 ;;		status,2, status,0, cstack
+  1564 ;; Tracked objects:
+  1565 ;;		On entry : 0/0
+  1566 ;;		On exit  : 0/0
+  1567 ;;		Unchanged: 0/0
+  1568 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+  1569 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1570 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1571 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1572 ;;      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1573 ;;Total ram usage:        0 bytes
+  1574 ;; Hardware stack levels used:    1
+  1575 ;; Hardware stack levels required when called:    2
+  1576 ;; This function calls:
+  1577 ;;		i2_reload_timer
+  1578 ;; This function is called by:
+  1579 ;;		_ISR
+  1580 ;; This function uses a non-reentrant model
+  1581 ;;
+  1582                           
+  1583                           	psect	text13
+  1584  0004F4                     __ptext13:
+  1585                           	opt stack 0
+  1586  0004F4                     _TMR_SysTick_ISR:
+  1587                           	opt stack 23
+  1588                           
+  1589                           ;TMR_SysTick.c: 13: INTCONbits.TMR0IF = 0;
+  1590                           
+  1591                           ;incstack = 0
+  1592  0004F4  94F2               	bcf	intcon,2,c	;volatile
+  1593                           
+  1594                           ;TMR_SysTick.c: 15: counter++;
+  1595  0004F6  4A1B               	infsnz	_counter,f,c	;volatile
+  1596  0004F8  2A1C               	incf	_counter+1,f,c	;volatile
+  1597                           
+  1598                           ;TMR_SysTick.c: 17: reload_timer();
+  1599  0004FA  EC73  F002         	call	i2_reload_timer	;wreg free
+  1600  0004FE  0012               	return		;funcret
+  1601  000500                     __end_of_TMR_SysTick_ISR:
+  1602                           	opt stack 0
+  1603                           pclatu	equ	0xFFB
+  1604                           pclath	equ	0xFFA
+  1605                           tblptru	equ	0xFF8
+  1606                           tblptrh	equ	0xFF7
+  1607                           tblptrl	equ	0xFF6
+  1608                           tablat	equ	0xFF5
+  1609                           prodh	equ	0xFF4
+  1610                           prodl	equ	0xFF3
+  1611                           intcon	equ	0xFF2
+  1612                           intcon2	equ	0xFF1
+  1613                           postinc0	equ	0xFEE
+  1614                           fsr0h	equ	0xFEA
+  1615                           fsr0l	equ	0xFE9
+  1616                           wreg	equ	0xFE8
+  1617                           fsr1h	equ	0xFE2
+  1618                           fsr1l	equ	0xFE1
+  1619                           fsr2h	equ	0xFDA
+  1620                           fsr2l	equ	0xFD9
+  1621                           status	equ	0xFD8
+  1622                           
+  1623 ;; *************** function i2_reload_timer *****************
+  1624 ;; Defined at:
+  1625 ;;		line 33 in file "TMR_SysTick.c"
+  1626 ;; Parameters:    Size  Location     Type
+  1627 ;;		None
+  1628 ;; Auto vars:     Size  Location     Type
+  1629 ;;		None
+  1630 ;; Return value:  Size  Location     Type
+  1631 ;;                  1    wreg      void 
+  1632 ;; Registers used:
+  1633 ;;		cstack
+  1634 ;; Tracked objects:
+  1635 ;;		On entry : 0/0
+  1636 ;;		On exit  : 0/0
+  1637 ;;		Unchanged: 0/0
+  1638 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+  1639 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1640 ;;      Locals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1641 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1642 ;;      Totals:         0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1643 ;;Total ram usage:        0 bytes
+  1644 ;; Hardware stack levels used:    1
+  1645 ;; Hardware stack levels required when called:    1
+  1646 ;; This function calls:
+  1647 ;;		i2_WriteTimer0
+  1648 ;; This function is called by:
+  1649 ;;		_TMR_SysTick_ISR
+  1650 ;; This function uses a non-reentrant model
+  1651 ;;
+  1652                           
+  1653                           	psect	text14
+  1654  0004E6                     __ptext14:
+  1655                           	opt stack 0
+  1656  0004E6                     i2_reload_timer:
+  1657                           	opt stack 23
+  1658                           
+  1659                           ;TMR_SysTick.c: 35: WriteTimer0(systick_tmr_reload);
+  1660                           
+  1661                           ;incstack = 0
+  1662  0004E6  C020  F001         	movff	_systick_tmr_reload,i2WriteTimer0@timer0	;volatile
+  1663  0004EA  C021  F002         	movff	_systick_tmr_reload+1,i2WriteTimer0@timer0+1	;volatile
+  1664  0004EE  EC5B  F002         	call	i2_WriteTimer0	;wreg free
+  1665  0004F2  0012               	return		;funcret
+  1666  0004F4                     __end_ofi2_reload_timer:
+  1667                           	opt stack 0
+  1668                           pclatu	equ	0xFFB
+  1669                           pclath	equ	0xFFA
+  1670                           tblptru	equ	0xFF8
+  1671                           tblptrh	equ	0xFF7
+  1672                           tblptrl	equ	0xFF6
+  1673                           tablat	equ	0xFF5
+  1674                           prodh	equ	0xFF4
+  1675                           prodl	equ	0xFF3
+  1676                           intcon	equ	0xFF2
+  1677                           intcon2	equ	0xFF1
+  1678                           postinc0	equ	0xFEE
+  1679                           fsr0h	equ	0xFEA
+  1680                           fsr0l	equ	0xFE9
+  1681                           wreg	equ	0xFE8
+  1682                           fsr1h	equ	0xFE2
+  1683                           fsr1l	equ	0xFE1
+  1684                           fsr2h	equ	0xFDA
+  1685                           fsr2l	equ	0xFD9
+  1686                           status	equ	0xFD8
+  1687                           
+  1688 ;; *************** function i2_WriteTimer0 *****************
+  1689 ;; Defined at:
+  1690 ;;		line 16 in file "C:\Program Files (x86)\Microchip\xc8\v1.38\sources\pic18\plib\Timers\t0write.c"
+  1691 ;; Parameters:    Size  Location     Type
+  1692 ;;  timer0          2    0[COMRAM] unsigned int 
+  1693 ;; Auto vars:     Size  Location     Type
+  1694 ;;  WriteTimer0     2    2[COMRAM] struct Timers
+  1695 ;; Return value:  Size  Location     Type
+  1696 ;;                  1    wreg      void 
+  1697 ;; Registers used:
+  1698 ;;		None
+  1699 ;; Tracked objects:
+  1700 ;;		On entry : 0/0
+  1701 ;;		On exit  : 0/0
+  1702 ;;		Unchanged: 0/0
+  1703 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+      +1  BANK12  BANK13  BANK14  BANK15
+  1704 ;;      Params:         2       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1705 ;;      Locals:         2       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1706 ;;      Temps:          0       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1707 ;;      Totals:         4       0       0       0       0       0       0       0       0       0       0       0       
+      +0       0       0       0       0
+  1708 ;;Total ram usage:        4 bytes
+  1709 ;; Hardware stack levels used:    1
+  1710 ;; This function calls:
+  1711 ;;		Nothing
+  1712 ;; This function is called by:
+  1713 ;;		i2_reload_timer
+  1714 ;; This function uses a non-reentrant model
+  1715 ;;
+  1716                           
+  1717                           	psect	text15
+  1718  0004B6                     __ptext15:
+  1719                           	opt stack 0
+  1720  0004B6                     i2_WriteTimer0:
+  1721                           	opt stack 23
+  1722                           
+  1723                           ;incstack = 0
+  1724  0004B6  C001  F003         	movff	i2WriteTimer0@timer0,i2WriteTimer0@timer
+  1725  0004BA  C002  F004         	movff	i2WriteTimer0@timer0+1,i2WriteTimer0@timer+1
+  1726  0004BE  C004  FFD7         	movff	i2WriteTimer0@timer+1,4055	;volatile
+  1727  0004C2  C003  FFD6         	movff	i2WriteTimer0@timer,4054	;volatile
+  1728  0004C6  0012               	return		;funcret
+  1729  0004C8                     __end_ofi2_WriteTimer0:
+  1730                           	opt stack 0
+  1731  0000                     pclatu	equ	0xFFB
+  1732                           pclath	equ	0xFFA
+  1733                           tblptru	equ	0xFF8
+  1734                           tblptrh	equ	0xFF7
+  1735                           tblptrl	equ	0xFF6
+  1736                           tablat	equ	0xFF5
+  1737                           prodh	equ	0xFF4
+  1738                           prodl	equ	0xFF3
+  1739                           intcon	equ	0xFF2
+  1740                           intcon2	equ	0xFF1
+  1741                           postinc0	equ	0xFEE
+  1742                           fsr0h	equ	0xFEA
+  1743                           fsr0l	equ	0xFE9
+  1744                           wreg	equ	0xFE8
+  1745                           fsr1h	equ	0xFE2
+  1746                           fsr1l	equ	0xFE1
+  1747                           fsr2h	equ	0xFDA
+  1748                           fsr2l	equ	0xFD9
+  1749                           status	equ	0xFD8
+  1750                           pclatu	equ	0xFFB
+  1751                           pclath	equ	0xFFA
+  1752                           tblptru	equ	0xFF8
+  1753                           tblptrh	equ	0xFF7
+  1754                           tblptrl	equ	0xFF6
+  1755                           tablat	equ	0xFF5
+  1756                           prodh	equ	0xFF4
+  1757                           prodl	equ	0xFF3
+  1758                           intcon	equ	0xFF2
+  1759                           intcon2	equ	0xFF1
+  1760                           postinc0	equ	0xFEE
+  1761                           fsr0h	equ	0xFEA
+  1762                           fsr0l	equ	0xFE9
+  1763                           wreg	equ	0xFE8
+  1764                           fsr1h	equ	0xFE2
+  1765                           fsr1l	equ	0xFE1
+  1766                           fsr2h	equ	0xFDA
+  1767                           fsr2l	equ	0xFD9
+  1768                           status	equ	0xFD8
+  1769                           
+  1770                           	psect	rparam
+  1771  0000                     pclatu	equ	0xFFB
+  1772                           pclath	equ	0xFFA
+  1773                           tblptru	equ	0xFF8
+  1774                           tblptrh	equ	0xFF7
+  1775                           tblptrl	equ	0xFF6
+  1776                           tablat	equ	0xFF5
+  1777                           prodh	equ	0xFF4
+  1778                           prodl	equ	0xFF3
+  1779                           intcon	equ	0xFF2
+  1780                           intcon2	equ	0xFF1
+  1781                           postinc0	equ	0xFEE
+  1782                           fsr0h	equ	0xFEA
+  1783                           fsr0l	equ	0xFE9
+  1784                           wreg	equ	0xFE8
+  1785                           fsr1h	equ	0xFE2
+  1786                           fsr1l	equ	0xFE1
+  1787                           fsr2h	equ	0xFDA
+  1788                           fsr2l	equ	0xFD9
+  1789                           status	equ	0xFD8
+  1790                           
+  1791                           	psect	temp
+  1792  000023                     btemp:
+  1793                           	opt stack 0
+  1794  000023                     	ds	1
+  1795  0000                     int$flags	set	btemp
+  1796                           pclatu	equ	0xFFB
+  1797                           pclath	equ	0xFFA
+  1798                           tblptru	equ	0xFF8
+  1799                           tblptrh	equ	0xFF7
+  1800                           tblptrl	equ	0xFF6
+  1801                           tablat	equ	0xFF5
+  1802                           prodh	equ	0xFF4
+  1803                           prodl	equ	0xFF3
+  1804                           intcon	equ	0xFF2
+  1805                           intcon2	equ	0xFF1
+  1806                           postinc0	equ	0xFEE
+  1807                           fsr0h	equ	0xFEA
+  1808                           fsr0l	equ	0xFE9
+  1809                           wreg	equ	0xFE8
+  1810                           fsr1h	equ	0xFE2
+  1811                           fsr1l	equ	0xFE1
+  1812                           fsr2h	equ	0xFDA
+  1813                           fsr2l	equ	0xFD9
+  1814                           status	equ	0xFD8
+
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        0
+    BSS         8
+    Persistent  3
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMRAM           94     23      34
+    BANK0           160      0       0
+    BANK1           256      0       0
+    BANK2           256      0       0
+    BANK3           256      0       0
+    BANK4           256      0       0
+    BANK5           256      0       0
+    BANK6           256      0       0
+    BANK7           256      0       0
+    BANK8           256      0       0
+    BANK9           256      0       0
+    BANK10          256      0       0
+    BANK11          256      0       0
+    BANK12          256      0       0
+    BANK13          256      0       0
+    BANK14          256      0       0
+    BANK15           96      0       0
+
+Pointer List with Targets:
+
+    sp__IO_Buttons_getAllButtons	PTR volatile struct . size(2) Largest target is 1
+		 -> button_state_bits(COMRAM[1]), 
+
+
+Critical Paths under _main in COMRAM
+
+    _main->_TMR_SysTick_configure
+    _reload_timer->_WriteTimer0
+    _IO_LCD_WriteChar->_write_data
+    _IO_LCD_Init->_write_cmd
+    _IO_LCD_Init->_write_port
+
+Critical Paths under _ISR in COMRAM
+
+    i2_reload_timer->i2_WriteTimer0
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _ISR in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _ISR in BANK1
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _ISR in BANK2
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _ISR in BANK3
+
+    None.
+
+Critical Paths under _main in BANK4
+
+    None.
+
+Critical Paths under _ISR in BANK4
+
+    None.
+
+Critical Paths under _main in BANK5
+
+    None.
+
+Critical Paths under _ISR in BANK5
+
+    None.
+
+Critical Paths under _main in BANK6
+
+    None.
+
+Critical Paths under _ISR in BANK6
+
+    None.
+
+Critical Paths under _main in BANK7
+
+    None.
+
+Critical Paths under _ISR in BANK7
+
+    None.
+
+Critical Paths under _main in BANK8
+
+    None.
+
+Critical Paths under _ISR in BANK8
+
+    None.
+
+Critical Paths under _main in BANK9
+
+    None.
+
+Critical Paths under _ISR in BANK9
+
+    None.
+
+Critical Paths under _main in BANK10
+
+    None.
+
+Critical Paths under _ISR in BANK10
+
+    None.
+
+Critical Paths under _main in BANK11
+
+    None.
+
+Critical Paths under _ISR in BANK11
+
+    None.
+
+Critical Paths under _main in BANK12
+
+    None.
+
+Critical Paths under _ISR in BANK12
+
+    None.
+
+Critical Paths under _main in BANK13
+
+    None.
+
+Critical Paths under _ISR in BANK13
+
+    None.
+
+Critical Paths under _main in BANK14
+
+    None.
+
+Critical Paths under _ISR in BANK14
+
+    None.
+
+Critical Paths under _main in BANK15
+
+    None.
+
+Critical Paths under _ISR in BANK15
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 2     2      0     663
+                        _IO_LCD_Init
+                   _IO_LCD_WriteChar
+                   _IO_LED_configure
+              _TMR_SysTick_configure
+ ---------------------------------------------------------------------------------
+ (1) _TMR_SysTick_configure                                1     1      0     288
+                                             22 COMRAM     1     1      0
+        TMR_SysTick@enable_interrupt
+                       _reload_timer
+                        _start_timer
+ ---------------------------------------------------------------------------------
+ (2) _start_timer                                          0     0      0       0
+ ---------------------------------------------------------------------------------
+ (2) TMR_SysTick@enable_interrupt                          0     0      0     133
+                       _reload_timer
+ ---------------------------------------------------------------------------------
+ (2) _reload_timer                                         0     0      0     133
+                        _WriteTimer0
+ ---------------------------------------------------------------------------------
+ (3) _WriteTimer0                                          4     2      2     133
+                                             18 COMRAM     4     2      2
+ ---------------------------------------------------------------------------------
+ (1) _IO_LED_configure                                     0     0      0       0
+ ---------------------------------------------------------------------------------
+ (1) _IO_LCD_WriteChar                                     1     1      0     135
+                                             21 COMRAM     1     1      0
+                         _write_data
+ ---------------------------------------------------------------------------------
+ (2) _write_data                                           3     3      0     120
+                                             18 COMRAM     3     3      0
+ ---------------------------------------------------------------------------------
+ (1) _IO_LCD_Init                                          1     1      0     240
+                                             21 COMRAM     1     1      0
+                          _write_cmd
+                         _write_port
+ ---------------------------------------------------------------------------------
+ (2) _write_port                                           3     3      0     120
+                                             18 COMRAM     3     3      0
+ ---------------------------------------------------------------------------------
+ (2) _write_cmd                                            3     3      0     120
+                                             18 COMRAM     3     3      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 3
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (5) _ISR                                                 14    14      0      93
+                                              4 COMRAM    14    14      0
+                    _TMR_SysTick_ISR
+ ---------------------------------------------------------------------------------
+ (6) _TMR_SysTick_ISR                                      0     0      0      93
+                     i2_reload_timer
+ ---------------------------------------------------------------------------------
+ (7) i2_reload_timer                                       0     0      0      93
+                      i2_WriteTimer0
+ ---------------------------------------------------------------------------------
+ (8) i2_WriteTimer0                                        4     2      2      93
+                                              0 COMRAM     4     2      2
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 8
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+   _IO_LCD_Init
+     _write_cmd
+     _write_port
+   _IO_LCD_WriteChar
+     _write_data
+   _IO_LED_configure
+   _TMR_SysTick_configure
+     TMR_SysTick@enable_interrupt
+       _reload_timer
+         _WriteTimer0
+     _reload_timer
+       _WriteTimer0
+     _start_timer
+
+ _ISR (ROOT)
+   _TMR_SysTick_ISR
+     i2_reload_timer
+       i2_WriteTimer0
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BIGRAM             F5F      0       0      37        0.0%
+EEDATA             400      0       0       0        0.0%
+BITBANK14          100      0       0      33        0.0%
+BANK14             100      0       0      34        0.0%
+BITBANK13          100      0       0      30        0.0%
+BANK13             100      0       0      31        0.0%
+BITBANK12          100      0       0      28        0.0%
+BANK12             100      0       0      29        0.0%
+BITBANK11          100      0       0      26        0.0%
+BANK11             100      0       0      27        0.0%
+BITBANK10          100      0       0      24        0.0%
+BANK10             100      0       0      25        0.0%
+BITBANK9           100      0       0      22        0.0%
+BANK9              100      0       0      23        0.0%
+BITBANK8           100      0       0      20        0.0%
+BANK8              100      0       0      21        0.0%
+BITBANK7           100      0       0      18        0.0%
+BANK7              100      0       0      19        0.0%
+BITBANK6           100      0       0      16        0.0%
+BANK6              100      0       0      17        0.0%
+BITBANK5           100      0       0      14        0.0%
+BANK5              100      0       0      15        0.0%
+BITBANK4           100      0       0      12        0.0%
+BANK4              100      0       0      13        0.0%
+BITBANK3           100      0       0      10        0.0%
+BANK3              100      0       0      11        0.0%
+BITBANK2           100      0       0       8        0.0%
+BANK2              100      0       0       9        0.0%
+BITBANK1           100      0       0       6        0.0%
+BANK1              100      0       0       7        0.0%
+BITBANK0            A0      0       0       4        0.0%
+BANK0               A0      0       0       5        0.0%
+BITBANK15           60      0       0      35        0.0%
+BANK15              60      0       0      36        0.0%
+BITCOMRAM           5E      0       0       0        0.0%
+COMRAM              5E     17      22       1       36.2%
+BITSFR               0      0       0      40        0.0%
+SFR                  0      0       0      40        0.0%
+STACK                0      0       0       2        0.0%
+NULL                 0      0       0       0        0.0%
+ABS                  0      0      22      32        0.0%
+DATA                 0      0      22       3        0.0%
+CODE                 0      0       0       0        0.0%
+
+
+Microchip Technology PIC18 Macro Assembler V1.38 build -256452561 
+Symbol Table                                                                                   Fri Nov 10 23:21:41 2017
+
+                                     u35 0224                                       u45 023E  
+                                     u55 0262                                       u65 0126  
+                                     u75 0140                                       u85 0164  
+                                     u95 0026                              __CFG_BORV$3 000000  
+                         i2_reload_timer 04E6                             __CFG_CP0$OFF 000000  
+                           __CFG_CP1$OFF 000000                             __CFG_CP2$OFF 000000  
+                           __CFG_CP3$OFF 000000                              __CFG_OSC$HS 000000  
+                           __CFG_CP4$OFF 000000                             __CFG_CP5$OFF 000000  
+                           __CFG_CP6$OFF 000000                             __CFG_CP7$OFF 000000  
+                                    l128 0472                             __CFG_CPB$OFF 000000  
+                                    u105 0040                                      u115 0064  
+                           __CFG_CPD$OFF 000000                                      u507 034E  
+                                    _ISR 0008                                      u517 035A  
+                                    u527 0366                                      u537 0372  
+                                    u457 04D2                                      u547 0382  
+                                    u467 0108                                      u557 0392  
+                                    u477 0112                                      u567 039E  
+                                    u487 0328                                      u577 0208  
+                                    u497 033C                                      u587 0212  
+                   __size_of_WriteTimer0 0012                              _start_timer 050A  
+                                    wreg 000FE8                             __CFG_MODE$MC 000000  
+                           __CFG_LVP$OFF 000000                                     ?_ISR 0001  
+                       _IO_LED_configure 0500                             __CFG_WDT$OFF 000000  
+                                   l1173 0484                                     l1169 047E  
+             _buttons_interrupt_priority 001D                                     _main 0450  
+                                   fsr0h 000FEA                                     fsr1h 000FE2  
+                                   fsr0l 000FE9                                     fsr2h 000FDA  
+                                   fsr1l 000FE1                                     fsr2l 000FD9  
+                                   btemp 0023                   __size_ofi2_WriteTimer0 0012  
+                                   pclat 000FFA                                     prodh 000FF4  
+                                   prodl 000FF3                                     start 0016  
+                          __CFG_IESO$OFF 000000                           write_data@data 0015  
+                          __CFG_MCLRE$ON 000000                             ___param_bank 000010  
+                                  ??_ISR 0005                   __end_ofi2_reload_timer 04F4  
+                 ?_TMR_SysTick_configure 0001                            __CFG_WAIT$OFF 000000  
+                                  ?_main 0001                                    _T0CON 000FD5  
+                                  _TMR0H 000FD7                                    _TMR0L 000FD6  
+                                  _PORTB 000F81                                    _TRISJ 000F9A  
+                          __CFG_PWRT$OFF 000000                            __CFG_WRT0$OFF 000000  
+                          __CFG_WRT1$OFF 000000                            __CFG_WRT2$OFF 000000  
+                          __CFG_WRT3$OFF 000000                            __CFG_WRT4$OFF 000000  
+                          __CFG_WRT5$OFF 000000                            __CFG_WRT6$OFF 000000  
+                          __CFG_WRT7$OFF 000000                           __CFG_EBTR0$OFF 000000  
+                         __CFG_FCMEN$OFF 000000                           __CFG_EBTR1$OFF 000000  
+                         __CFG_EBTR2$OFF 000000                           __CFG_EBTR3$OFF 000000  
+                         __CFG_EBTR4$OFF 000000                           __CFG_EBTR5$OFF 000000  
+                         __CFG_EBTR6$OFF 000000                           __CFG_EBTR7$OFF 000000  
+                          __CFG_WRTB$OFF 000000                            __CFG_WRTC$OFF 000000  
+              IO_LCD_WriteChar@character 0016                            __CFG_WRTD$OFF 000000  
+                         __CFG_EBTRB$OFF 000000                             ?_IO_LCD_Init 0001  
+                                  tablat 000FF5                                    status 000FD8  
+                        __initialization 048E                             __end_of_main 0474  
+                        ?i2_reload_timer 0001                                   ??_main 0018  
+                         write_port@data 0015                            i2_WriteTimer0 04B6  
+                          __activetblptr 000003                 __end_of_IO_LCD_WriteChar 04D8  
+                        __CFG_BBSIZ$BB2K 000000             ?TMR_SysTick@enable_interrupt 0001  
+                         __CFG_XINST$OFF 000000                           __CFG_STVREN$ON 000000  
+                                 clear_0 0494                           ?i2_WriteTimer0 0001  
+                                 tblptrh 000FF7                                   tblptrl 000FF6  
+                                 tblptru 000FF8                               __accesstop 0060  
+                __end_of__initialization 049A            ??TMR_SysTick@enable_interrupt 0017  
+                          ___rparam_used 000001                        _button_state_bits 001F  
+                         __pcstackCOMRAM 0001                 __end_of_IO_LED_configure 050A  
+                           ?_start_timer 0001                     __size_of_IO_LCD_Init 00B0  
+               __size_of_TMR_SysTick_ISR 000C                               __pnvCOMRAM 0020  
+                ??_TMR_SysTick_configure 0017               _systick_interrupt_priority 0022  
+                          ?_reload_timer 0001                          ??i2_WriteTimer0 0003  
+                       WriteTimer0@timer 0015                            ??_WriteTimer0 0015  
+   __size_ofTMR_SysTick@enable_interrupt 001A                      i2WriteTimer0@timer0 0001  
+                       ??i2_reload_timer 0005                       __size_of_write_cmd 0100  
+                                __Hparam 0000                                  __Lparam 0000  
+                         ??_reload_timer 0017                                  __pcinit 048E  
+                                __ramtop 1000                                  __ptext0 0450  
+                                __ptext1 0428                                  __ptext2 050A  
+                                __ptext3 0474                                  __ptext4 04D8  
+                                __ptext5 04A4                                  __ptext6 0500  
+                                __ptext7 04C8                                  __ptext8 001A  
+                                __ptext9 0304                                _T0CONbits 000FD5  
+                           __size_of_ISR 0420                                  _counter 001B  
+                      ?_IO_LCD_WriteChar 0001                      __end_of_WriteTimer0 04B6  
+                     ??_IO_LCD_WriteChar 0016                           __pintcode_body 03B4  
+                   end_of_initialization 049A                                  int_func 03B4  
+                      ??_TMR_SysTick_ISR 0005                                  postinc0 000FEE  
+                              _PORTBbits 000F81                        __end_of_write_cmd 021A  
+                              _TRISBbits 000F93                                _TRISDbits 000F95  
+                              _TRISHbits 000F99                                _TRISJbits 000F9A  
+                   __size_of_start_timer 0004                             write_cmd@cmd 0015  
+                      ?_IO_LED_configure 0001                               _write_data 001A  
+                            _WriteTimer0 04A4                               _write_port 021A  
+                     ??_IO_LED_configure 0013                      start_initialization 048E  
+                            __end_of_ISR 0428                     __end_of_reload_timer 04E6  
+                 _buttons_use_interrupts 001E           __size_of_TMR_SysTick_configure 0028  
+          __end_of_TMR_SysTick_configure 0450                         __CFG_LPT1OSC$OFF 000000  
+                            __pbssCOMRAM 0018                            ??_IO_LCD_Init 0016  
+    __end_ofTMR_SysTick@enable_interrupt 048E              TMR_SysTick@enable_interrupt 0474  
+                      __CFG_CCP2MX$PORTC 000000                                __pintcode 0008  
+                            ?_write_data 0001                              ?_write_port 0001  
+                  __end_ofi2_WriteTimer0 04C8                                _lcd_state 0018  
+                      WriteTimer0@timer0 0013                       i2WriteTimer0@timer 0003  
+                     _systick_tmr_reload 0020                          _TMR_SysTick_ISR 04F4  
+                               _LATDbits 000F8C                      __end_of_IO_LCD_Init 03B4  
+                               _LATHbits 000F90                                 _LATJbits 000F91  
+              __size_of_IO_LCD_WriteChar 0010                    __CFG_DATABW$DATA16BIT 000000  
+                               _RCONbits 000FD0                         __CFG_WDTPS$32768 000000  
+                      __CFG_ECCPMX$PORTE 000000                    __size_of_reload_timer 000E  
+                              _write_cmd 011A                              _INTCON2bits 000FF1  
+                    __size_of_write_data 0100                      __size_of_write_port 00EA  
+                               __Hrparam 0000                                 __Lrparam 0000  
+                     __CFG_BOREN$SBORDIS 000000                             _reload_timer 04D8  
+                           ?_WriteTimer0 0013                  __size_ofi2_reload_timer 000E  
+                          ??_start_timer 0013                  __end_of_TMR_SysTick_ISR 0500  
+                               __ptext10 021A                                 __ptext11 011A  
+                               __ptext13 04F4                                 __ptext14 04E6  
+                               __ptext15 04B6                              _IO_LCD_Init 0304  
+                             ?_write_cmd 0001                __size_of_IO_LED_configure 000A  
+TMR_SysTick_configure@interrupt_priority 0017                            __size_of_main 0024  
+                               int$flags 0023                    __CFG_ADDRBW$ADDR20BIT 000000  
+                             _INTCONbits 000FF2                      __end_of_start_timer 050E  
+                               intlevel2 0000                         _IO_LCD_WriteChar 04C8  
+                           ??_write_data 0013                             ??_write_port 0013  
+                  _TMR_SysTick_configure 0428                         ?_TMR_SysTick_ISR 0001  
+                            ??_write_cmd 0013                       __end_of_write_data 011A  
+                     __end_of_write_port 0304  

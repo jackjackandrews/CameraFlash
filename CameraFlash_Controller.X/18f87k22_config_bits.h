@@ -1,17 +1,3 @@
-/* 
- * File:   18f87k22_config_bits.h
- * Author: Jack
- *
- * Created on 13 October 2017, 16:02
- */
-
-#ifndef 18F87K22_CONFIG_BITS_H
-#define	18F87K22_CONFIG_BITS_H
-
-#ifdef	__cplusplus
-extern "C" {
-#endif
-
 // PIC18F87K22 Configuration Bit Settings
 
 // 'C' source line config statements
@@ -19,8 +5,8 @@ extern "C" {
 // CONFIG1L
 #pragma config RETEN = ON       // VREG Sleep Enable bit (Enabled)
 #pragma config INTOSCSEL = HIGH // LF-INTOSC Low-power Enable bit (LF-INTOSC in High-power mode during Sleep)
-#pragma config SOSCSEL = HIGH   // SOSC Power Selection and mode Configuration bits (High Power SOSC circuit selected)
-#pragma config XINST = ON       // Extended Instruction Set (Enabled)
+#pragma config SOSCSEL = DIG    // SOSC Power Selection and mode Configuration bits (Digital (SCLKI) mode)
+#pragma config XINST = OFF       // Extended Instruction Set (Enabled)
 
 // CONFIG1H
 #pragma config FOSC = HS2       // Oscillator (HS oscillator (High power, 16 MHz - 25 MHz))
@@ -106,5 +92,5 @@ extern "C" {
 }
 #endif
 
-#endif	/* 18F87K22_CONFIG_BITS_H */
+//#endif	/* 18F87K22_CONFIG_BITS_H */
 
