@@ -18,7 +18,7 @@ extern "C" {
         
     } leds_t;
     
-    void IO_LED_configure(void);
+    void IO_LED_configureIO(void);
     
     bool IO_LED_getLED(leds_t led);
     

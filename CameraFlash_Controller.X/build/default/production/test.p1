@@ -13,9 +13,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S701 . . . . ]
 "13573
 [v _INTCONbits `VS701 ~T0 @X0 0 e@4082 ]
-[v F7049 `(v ~T0 @X0 1 tf ]
-"34 TMR_SysTick.h
-[v _TMR_SysTick_ISR `TF7049 ~T0 @X0 0 e ]
+[v F7141 `(v ~T0 @X0 1 tf ]
+"42 TMR_SysTick.h
+[v _TMR_SysTick_ISR `TF7141 ~T0 @X0 0 e ]
+[v F7166 `(v ~T0 @X0 1 tf ]
+"28 IO_Encoder.h
+[v _IO_Encoder_ISR `TF7166 ~T0 @X0 0 e ]
 [p mainexit ]
 "12505 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic18f8722.h
 [s S662 :1 `uc 1 ]
@@ -43,27 +46,28 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S661 . . . . . . . . ]
 "12542
 [v _RCONbits `VS661 ~T0 @X0 0 e@4048 ]
-"42 TMR_SysTick.h
+"50 TMR_SysTick.h
 [v _TMR_SysTick_configure `(v ~T0 @X0 0 ef1`uc ]
 "21 IO_LED.h
-[v _IO_LED_configure `(v ~T0 @X0 0 ef ]
-"7369 C:\Program Files (x86)\Microchip\xc8\v1.38\include\pic18f8722.h
-[v _TRISJ `Vuc ~T0 @X0 0 e@3994 ]
-"7159
-[s S354 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S354 . TRISH0 TRISH1 TRISH2 TRISH3 TRISH4 TRISH5 TRISH6 TRISH7 ]
-"7169
-[s S355 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S355 . RH0 RH1 RH2 RH3 RH4 RH5 RH6 RH7 ]
-"7158
-[u S353 `S354 1 `S355 1 ]
-[n S353 . . . ]
-"7180
-[v _TRISHbits `VS353 ~T0 @X0 0 e@3993 ]
-"29 IO_LCD.h
+[v _IO_LED_configureIO `(v ~T0 @X0 0 ef ]
+"34 IO_LCD.h
+[v _IO_LCD_configureIO `(v ~T0 @X0 0 ef ]
+"30 IO_Encoder.h
+[v _IO_Encoder_configureIO `(v ~T0 @X0 0 ef ]
+"36 IO_LCD.h
 [v _IO_LCD_Init `(v ~T0 @X0 0 ef ]
-"31
-[v _IO_LCD_WriteChar `(v ~T0 @X0 0 ef1`uc ]
+"46
+[v _IO_LCD_putrs `(v ~T0 @X0 0 ef1`*Cuc ]
+"48
+[v _IO_LCD_SetCursor `(v ~T0 @X0 0 ef2`uc`uc ]
+"32 IO_Encoder.h
+[v _IO_Encoder_getCount `(ui ~T0 @X0 0 ef ]
+"194 C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdio.h
+[v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
+"44 IO_LCD.h
+[v _IO_LCD_puts `(v ~T0 @X0 0 ef1`*uc ]
+"37 C:\Program Files (x86)\Microchip\xc8\v1.38\include\plib\delays.h
+[v _Delay10KTCYx `(v ~T0 @X0 0 ef1`uc ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -6344,7 +6348,36 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 157: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 159: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 161: extern __nonreentrant void _delay3(unsigned char);
-[; ;global_defines.h: 28: typedef char bool;
+[; ;stdarg.h: 7: typedef void * va_list[1];
+[; ;stdarg.h: 10: extern void * __va_start(void);
+[; ;stdarg.h: 13: extern void * __va_arg(void *, ...);
+[; ;stdio.h: 43: struct __prbuf
+[; ;stdio.h: 44: {
+[; ;stdio.h: 45: char * ptr;
+[; ;stdio.h: 46: void (* func)(char);
+[; ;stdio.h: 47: };
+[; ;errno.h: 29: extern int errno;
+[; ;conio.h: 12: extern void init_uart(void);
+[; ;conio.h: 14: extern char getch(void);
+[; ;conio.h: 15: extern char getche(void);
+[; ;conio.h: 16: extern void putch(char);
+[; ;conio.h: 17: extern void ungetch(char);
+[; ;conio.h: 19: extern __bit kbhit(void);
+[; ;conio.h: 23: extern char * cgets(char *);
+[; ;conio.h: 24: extern void cputs(const char *);
+[; ;stdio.h: 88: extern int cprintf(char *, ...);
+[; ;stdio.h: 93: extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+[; ;stdio.h: 183: extern char * gets(char *);
+[; ;stdio.h: 184: extern int puts(const char *);
+[; ;stdio.h: 185: extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+[; ;stdio.h: 186: extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+[; ;stdio.h: 187: extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+[; ;stdio.h: 188: extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+[; ;stdio.h: 189: extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+[; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+[; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
+[; ;stdio.h: 195: extern int printf(const char *, ...);
+[; ;global_defines.h: 27: typedef char bool;
 "6 18f8722_config_bits.h
 [p x OSC=HS ]
 "7
@@ -6460,109 +6493,164 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;IO_Buttons.h: 50: void IO_Buttons_disableInterrupt(void);
 [; ;IO_Buttons.h: 52: void IO_Buttons_enableInterrupt(void);
 [; ;IO_Buttons.h: 54: void IO_Buttons_switchInterruptPriority(bool interrupt_priority);
-[; ;IO_Buttons.h: 56: void IO_Buttons_configure(bool use_interrupts, bool interrupt_priority);
+[; ;IO_Buttons.h: 56: void IO_Buttons_configureIO(bool use_interrupts, bool interrupt_priority);
 [; ;IO_Buttons.h: 58: bool IO_Buttons_getButton(buttons_t button);
 [; ;IO_Buttons.h: 60: volatile buttons_state_t * IO_Buttons_getAllButtons(void);
 [; ;IO_LED.h: 15: typedef enum {
 [; ;IO_LED.h: 17: D_1, D_2, D_3, D_4
 [; ;IO_LED.h: 19: } leds_t;
-[; ;IO_LED.h: 21: void IO_LED_configure(void);
+[; ;IO_LED.h: 21: void IO_LED_configureIO(void);
 [; ;IO_LED.h: 23: bool IO_LED_getLED(leds_t led);
 [; ;IO_LED.h: 25: void IO_LED_setLED(leds_t led, bool state);
-[; ;IO_LCD.h: 18: typedef struct {
-[; ;IO_LCD.h: 20: char DDRAM_addr;
-[; ;IO_LCD.h: 21: char CGRAM_addr;
-[; ;IO_LCD.h: 22: bool display_on :1;
-[; ;IO_LCD.h: 23: bool cursor_on :1;
-[; ;IO_LCD.h: 24: bool blink_on :1;
-[; ;IO_LCD.h: 25: bool scroll_on :1;
-[; ;IO_LCD.h: 27: } lcd_state_t;
-[; ;IO_LCD.h: 29: void IO_LCD_Init(void);
-[; ;IO_LCD.h: 31: void IO_LCD_WriteChar(char character);
-[; ;TMR_SysTick.h: 32: extern volatile unsigned int counter;
-[; ;TMR_SysTick.h: 34: inline void TMR_SysTick_ISR(void);
-[; ;TMR_SysTick.h: 36: void TMR_SysTick_enableInterrupt(void);
-[; ;TMR_SysTick.h: 38: void TMR_SysTick_disableInterrupt(void);
-[; ;TMR_SysTick.h: 40: void TMR_SysTick_switchInterruptPriority(bool interrupt_priority);
-[; ;TMR_SysTick.h: 42: void TMR_SysTick_configure(bool interrupt_priority);
-[; ;TMR_SysTick.h: 44: void TMR_SysTick_stopTimer(void);
-[; ;TMR_SysTick.h: 46: void TMR_SysTick_startTimer(void);
-[; ;TMR_SysTick.h: 48: void TMR_SysTick_resetCounter(void);
-[; ;TMR_SysTick.h: 50: unsigned int TMR_SysTick_getCounter(void);
-[; ;TMR_SysTick.h: 52: void TMR_SysTick_setCounter(unsigned int value);
-[v F7070 `(v ~T0 @X0 1 tf ]
-"12 test.c
-[v _ISR `IF7070 ~T0 @X0 1 e ]
+[; ;IO_LCD.h: 24: typedef struct {
+[; ;IO_LCD.h: 26: char DDRAM_addr;
+[; ;IO_LCD.h: 27: char CGRAM_addr;
+[; ;IO_LCD.h: 28: bool display_on :1;
+[; ;IO_LCD.h: 29: bool cursor_on :1;
+[; ;IO_LCD.h: 30: bool blink_on :1;
+[; ;IO_LCD.h: 32: } lcd_state_t;
+[; ;IO_LCD.h: 34: void IO_LCD_configureIO(void);
+[; ;IO_LCD.h: 36: void IO_LCD_Init(void);
+[; ;IO_LCD.h: 38: void IO_LCD_ClearDisplay(void);
+[; ;IO_LCD.h: 40: void IO_LCD_putc(char character);
+[; ;IO_LCD.h: 42: void IO_LCD_putrc(const char character);
+[; ;IO_LCD.h: 44: void IO_LCD_puts(char *str);
+[; ;IO_LCD.h: 46: void IO_LCD_putrs(const char *str);
+[; ;IO_LCD.h: 48: void IO_LCD_SetCursor(char row, char col);
+[; ;IO_LCD.h: 50: void IO_LCD_EnableCursor(void);
+[; ;IO_LCD.h: 52: void IO_LCD_DisableCursor(void);
+[; ;IO_LCD.h: 54: void IO_LCD_EnableDisplay(void);
+[; ;IO_LCD.h: 56: void IO_LCD_DisableDisplay(void);
+[; ;IO_LCD.h: 58: void IO_LCD_EnableBlink(void);
+[; ;IO_LCD.h: 60: void IO_LCD_DisableBlink(void);
+[; ;IO_LCD.h: 62: void IO_LCD_SetEntryMode(bool inc_dec, bool disp_shift);
+[; ;IO_LCD.h: 64: void IO_LCD_ShiftCursor(bool direction);
+[; ;IO_LCD.h: 66: void IO_LCD_ShiftDisplay(bool direction);
+[; ;TMR_SysTick.h: 40: extern volatile unsigned int counter;
+[; ;TMR_SysTick.h: 42: inline void TMR_SysTick_ISR(void);
+[; ;TMR_SysTick.h: 44: void TMR_SysTick_enableInterrupt(void);
+[; ;TMR_SysTick.h: 46: void TMR_SysTick_disableInterrupt(void);
+[; ;TMR_SysTick.h: 48: void TMR_SysTick_switchInterruptPriority(bool interrupt_priority);
+[; ;TMR_SysTick.h: 50: void TMR_SysTick_configure(bool interrupt_priority);
+[; ;TMR_SysTick.h: 52: void TMR_SysTick_stopTimer(void);
+[; ;TMR_SysTick.h: 54: void TMR_SysTick_startTimer(void);
+[; ;TMR_SysTick.h: 56: void TMR_SysTick_resetCounter(void);
+[; ;TMR_SysTick.h: 58: unsigned int TMR_SysTick_getCounter(void);
+[; ;TMR_SysTick.h: 60: void TMR_SysTick_setCounter(unsigned int value);
+[; ;IO_Encoder.h: 21: typedef struct {
+[; ;IO_Encoder.h: 23: unsigned int count;
+[; ;IO_Encoder.h: 24: bool direction :1;
+[; ;IO_Encoder.h: 26: } encoder_state_t;
+[; ;IO_Encoder.h: 28: inline void IO_Encoder_ISR(void);
+[; ;IO_Encoder.h: 30: void IO_Encoder_configureIO(void);
+[; ;IO_Encoder.h: 32: unsigned int IO_Encoder_getCount(void);
+"14 test.c
+[p n 520 ]
+[v F7173 `(v ~T0 @X0 1 tf ]
+"16
+[v _ISR `IF7173 ~T0 @X0 1 e ]
 {
-[; ;test.c: 12: void interrupt ISR(void) {
+[; ;test.c: 16: void interrupt ISR(void) {
 [e :U _ISR ]
 [f ]
-[; ;test.c: 14: if(INTCONbits.TMR0IF == 1) {
-"14
-[e $ ! == -> . . _INTCONbits 0 2 `i -> 1 `i 749  ]
+[; ;test.c: 18: if(INTCONbits.TMR0IF == 1) {
+"18
+[e $ ! == -> . . _INTCONbits 0 2 `i -> 1 `i 751  ]
 {
-[; ;test.c: 15: TMR_SysTick_ISR();
-"15
-[e ( _TMR_SysTick_ISR ..  ]
-"16
-}
-[e :U 749 ]
-[; ;test.c: 16: }
-[; ;test.c: 19: }
+[; ;test.c: 19: TMR_SysTick_ISR();
 "19
-[e :UE 748 ]
-}
+[e ( _TMR_SysTick_ISR ..  ]
+[; ;test.c: 21: IO_Encoder_ISR();
 "21
-[v _main `(v ~T0 @X0 1 ef ]
-{
-[; ;test.c: 21: void main(void) {
-[e :U _main ]
-[f ]
-"23
-[v _count `ui ~T0 @X0 1 a ]
-[; ;test.c: 23: unsigned int count;
-[; ;test.c: 25: RCONbits.IPEN = 0;
-"25
-[e = . . _RCONbits 5 7 -> -> 0 `i `uc ]
-[; ;test.c: 27: INTCONbits.PEIE = 0;
-"27
-[e = . . _INTCONbits 1 6 -> -> 0 `i `uc ]
-[; ;test.c: 28: INTCONbits.GIE = 1;
-"28
-[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
-[; ;test.c: 30: TMR_SysTick_configure(0);
-"30
-[e ( _TMR_SysTick_configure (1 -> -> 0 `i `uc ]
-[; ;test.c: 31: IO_LED_configure();
-"31
-[e ( _IO_LED_configure ..  ]
-[; ;test.c: 33: TRISJ = 0x0F;
-"33
-[e = _TRISJ -> -> 15 `i `uc ]
-[; ;test.c: 34: TRISHbits.TRISH6 = 0;
-"34
-[e = . . _TRISHbits 0 6 -> -> 0 `i `uc ]
-[; ;test.c: 35: TRISHbits.TRISH7 = 0;
-"35
-[e = . . _TRISHbits 0 7 -> -> 0 `i `uc ]
-[; ;test.c: 37: IO_LCD_Init();
-"37
-[e ( _IO_LCD_Init ..  ]
-[; ;test.c: 39: IO_LCD_WriteChar('h');
-"39
-[e ( _IO_LCD_WriteChar (1 -> -> 104 `ui `uc ]
-[; ;test.c: 41: while(1) {
-"41
-[e :U 752 ]
-{
-"45
+[e ( _IO_Encoder_ISR ..  ]
+"22
 }
 [e :U 751 ]
-"41
-[e $U 752  ]
-[e :U 753 ]
-[; ;test.c: 45: }
-[; ;test.c: 48: }
-"48
+[; ;test.c: 22: }
+[; ;test.c: 25: }
+"25
 [e :UE 750 ]
 }
+"27
+[v _main `(v ~T0 @X0 1 ef ]
+{
+[; ;test.c: 27: void main(void) {
+[e :U _main ]
+[f ]
+"29
+[v _count `ui ~T0 @X0 1 a ]
+[; ;test.c: 29: unsigned int count = 0;
+[e = _count -> -> 0 `i `ui ]
+"30
+[v _buff `uc ~T0 @X0 -> 20 `i a ]
+[; ;test.c: 30: char buff[20];
+[; ;test.c: 32: RCONbits.IPEN = 0;
+"32
+[e = . . _RCONbits 5 7 -> -> 0 `i `uc ]
+[; ;test.c: 34: INTCONbits.PEIE = 0;
+"34
+[e = . . _INTCONbits 1 6 -> -> 0 `i `uc ]
+[; ;test.c: 35: INTCONbits.GIE = 1;
+"35
+[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
+[; ;test.c: 37: TMR_SysTick_configure(0);
+"37
+[e ( _TMR_SysTick_configure (1 -> -> 0 `i `uc ]
+[; ;test.c: 38: IO_LED_configureIO();
+"38
+[e ( _IO_LED_configureIO ..  ]
+[; ;test.c: 39: IO_LCD_configureIO();
+"39
+[e ( _IO_LCD_configureIO ..  ]
+[; ;test.c: 40: IO_Encoder_configureIO();
+"40
+[e ( _IO_Encoder_configureIO ..  ]
+[; ;test.c: 42: IO_LCD_Init();
+"42
+[e ( _IO_LCD_Init ..  ]
+[; ;test.c: 44: IO_LCD_putrs("George has ");
+"44
+[e ( _IO_LCD_putrs (1 :s 1C ]
+[; ;test.c: 45: IO_LCD_SetCursor(2, 1);
+"45
+[e ( _IO_LCD_SetCursor (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+[; ;test.c: 46: IO_LCD_putrs("friends");
+"46
+[e ( _IO_LCD_putrs (1 :s 2C ]
+[; ;test.c: 47: IO_LCD_SetCursor(1, 12);
+"47
+[e ( _IO_LCD_SetCursor (2 , -> -> 1 `i `uc -> -> 12 `i `uc ]
+[; ;test.c: 49: while(1){
+"49
+[e :U 754 ]
+{
+[; ;test.c: 51: count += IO_Encoder_getCount();
+"51
+[e =+ _count ( _IO_Encoder_getCount ..  ]
+[; ;test.c: 52: sprintf(buff, "%-5d", count);
+"52
+[e ( _sprintf (1 , (. , &U _buff :s 3C _count ]
+[; ;test.c: 53: IO_LCD_puts(buff);
+"53
+[e ( _IO_LCD_puts (1 &U _buff ]
+[; ;test.c: 55: Delay10KTCYx(10);
+"55
+[e ( _Delay10KTCYx (1 -> -> 10 `i `uc ]
+[; ;test.c: 57: IO_LCD_SetCursor(1, 12);
+"57
+[e ( _IO_LCD_SetCursor (2 , -> -> 1 `i `uc -> -> 12 `i `uc ]
+"59
+}
+[e :U 753 ]
+"49
+[e $U 754  ]
+[e :U 755 ]
+[; ;test.c: 59: }
+[; ;test.c: 62: }
+"62
+[e :UE 752 ]
+}
+[p f _sprintf 8421512 ]
+[a 2C 102 114 105 101 110 100 115 0 ]
+[a 3C 37 45 53 100 0 ]
+[a 1C 71 101 111 114 103 101 32 104 97 115 32 0 ]

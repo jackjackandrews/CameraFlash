@@ -6401,7 +6401,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 157: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 159: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 161: extern __nonreentrant void _delay3(unsigned char);
-[; ;global_defines.h: 28: typedef char bool;
+[; ;global_defines.h: 27: typedef char bool;
 [; ;IO_Buttons.h: 31: typedef enum {
 [; ;IO_Buttons.h: 33: PB_1, PB_2, PB_3, PB_4, PB_5, PB_6
 [; ;IO_Buttons.h: 35: } buttons_t;
@@ -6417,7 +6417,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;IO_Buttons.h: 50: void IO_Buttons_disableInterrupt(void);
 [; ;IO_Buttons.h: 52: void IO_Buttons_enableInterrupt(void);
 [; ;IO_Buttons.h: 54: void IO_Buttons_switchInterruptPriority(bool interrupt_priority);
-[; ;IO_Buttons.h: 56: void IO_Buttons_configure(bool use_interrupts, bool interrupt_priority);
+[; ;IO_Buttons.h: 56: void IO_Buttons_configureIO(bool use_interrupts, bool interrupt_priority);
 [; ;IO_Buttons.h: 58: bool IO_Buttons_getButton(buttons_t button);
 [; ;IO_Buttons.h: 60: volatile buttons_state_t * IO_Buttons_getAllButtons(void);
 "5 IO_Buttons.c
@@ -6656,10 +6656,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 759 ]
 }
 "109
-[v _IO_Buttons_configure `(v ~T0 @X0 1 ef2`uc`uc ]
+[v _IO_Buttons_configureIO `(v ~T0 @X0 1 ef2`uc`uc ]
 {
-[; ;IO_Buttons.c: 109: void IO_Buttons_configure(bool use_interrupts, bool interrupt_priority) {
-[e :U _IO_Buttons_configure ]
+[; ;IO_Buttons.c: 109: void IO_Buttons_configureIO(bool use_interrupts, bool interrupt_priority) {
+[e :U _IO_Buttons_configureIO ]
 [v _use_interrupts `uc ~T0 @X0 1 r1 ]
 [v _interrupt_priority `uc ~T0 @X0 1 r2 ]
 [f ]

@@ -6329,18 +6329,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 157: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 159: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 161: extern __nonreentrant void _delay3(unsigned char);
-[; ;global_defines.h: 28: typedef char bool;
-[; ;TMR_SysTick.h: 32: extern volatile unsigned int counter;
-[; ;TMR_SysTick.h: 34: inline void TMR_SysTick_ISR(void);
-[; ;TMR_SysTick.h: 36: void TMR_SysTick_enableInterrupt(void);
-[; ;TMR_SysTick.h: 38: void TMR_SysTick_disableInterrupt(void);
-[; ;TMR_SysTick.h: 40: void TMR_SysTick_switchInterruptPriority(bool interrupt_priority);
-[; ;TMR_SysTick.h: 42: void TMR_SysTick_configure(bool interrupt_priority);
-[; ;TMR_SysTick.h: 44: void TMR_SysTick_stopTimer(void);
-[; ;TMR_SysTick.h: 46: void TMR_SysTick_startTimer(void);
-[; ;TMR_SysTick.h: 48: void TMR_SysTick_resetCounter(void);
-[; ;TMR_SysTick.h: 50: unsigned int TMR_SysTick_getCounter(void);
-[; ;TMR_SysTick.h: 52: void TMR_SysTick_setCounter(unsigned int value);
+[; ;global_defines.h: 27: typedef char bool;
+[; ;TMR_SysTick.h: 40: extern volatile unsigned int counter;
+[; ;TMR_SysTick.h: 42: inline void TMR_SysTick_ISR(void);
+[; ;TMR_SysTick.h: 44: void TMR_SysTick_enableInterrupt(void);
+[; ;TMR_SysTick.h: 46: void TMR_SysTick_disableInterrupt(void);
+[; ;TMR_SysTick.h: 48: void TMR_SysTick_switchInterruptPriority(bool interrupt_priority);
+[; ;TMR_SysTick.h: 50: void TMR_SysTick_configure(bool interrupt_priority);
+[; ;TMR_SysTick.h: 52: void TMR_SysTick_stopTimer(void);
+[; ;TMR_SysTick.h: 54: void TMR_SysTick_startTimer(void);
+[; ;TMR_SysTick.h: 56: void TMR_SysTick_resetCounter(void);
+[; ;TMR_SysTick.h: 58: unsigned int TMR_SysTick_getCounter(void);
+[; ;TMR_SysTick.h: 60: void TMR_SysTick_setCounter(unsigned int value);
 "6 TMR_SysTick.c
 [v _systick_interrupt_priority `Vuc ~T0 @X0 1 s ]
 [; ;TMR_SysTick.c: 6: volatile static bool systick_interrupt_priority;

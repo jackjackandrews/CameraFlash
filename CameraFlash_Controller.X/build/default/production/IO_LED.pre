@@ -8184,7 +8184,7 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 28 "global_defines.h"
+# 27 "global_defines.h"
 typedef char bool;
 
 # 15 "IO_LED.h"
@@ -8194,19 +8194,24 @@ D_1, D_2, D_3, D_4
 
 } leds_t;
 
-void IO_LED_configure(void);
+void IO_LED_configureIO(void);
 
 bool IO_LED_getLED(leds_t led);
 
 void IO_LED_setLED(leds_t led, bool state);
 
 # 5 "IO_LED.c"
-void IO_LED_configure(void) {
+void IO_LED_configureIO(void) {
 
 TRISHbits.TRISH0 = 0;
 TRISHbits.TRISH1 = 0;
 TRISHbits.TRISH2 = 0;
 TRISHbits.TRISH3 = 0;
+
+LATHbits.LATH0 = 1;
+LATHbits.LATH1 = 1;
+LATHbits.LATH2 = 1;
+LATHbits.LATH3 = 1;
 
 }
 

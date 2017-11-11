@@ -11,6 +11,14 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
+    
+#ifndef TRUE
+    #define TRUE    1
+#endif
+
+#ifndef FALSE
+    #define FALSE   0
+#endif
 
 #ifndef USE_INTERRUPTS    
     #define USE_INTERRUPTS 1
@@ -26,7 +34,7 @@ extern "C" {
     #define HP_INTERRUPT 1
 #endif
 
-#define FOSC_KHZ FOSC / 1000
+#define FOSC_KHZ _XTAL_FREQ / 1000
 #define TMR_SYSTICK_IF INTCONbits.TMR0IF
 
     extern volatile unsigned int counter;

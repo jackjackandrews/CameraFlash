@@ -2,12 +2,17 @@
 #include "global_defines.h"
 #include "IO_LED.h"
 
-void IO_LED_configure(void) {
+void IO_LED_configureIO(void) {
     
     TRISHbits.TRISH0 = 0;
     TRISHbits.TRISH1 = 0;
     TRISHbits.TRISH2 = 0;
     TRISHbits.TRISH3 = 0;
+    
+    LATHbits.LATH0 = 1;
+    LATHbits.LATH1 = 1;
+    LATHbits.LATH2 = 1;
+    LATHbits.LATH3 = 1;
     
 }
 

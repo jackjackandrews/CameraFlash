@@ -8184,10 +8184,10 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 28 "global_defines.h"
+# 27 "global_defines.h"
 typedef char bool;
 
-# 18 "IO_LCD.h"
+# 24 "IO_LCD.h"
 typedef struct {
 
 char DDRAM_addr;
@@ -8195,99 +8195,132 @@ char CGRAM_addr;
 bool display_on :1;
 bool cursor_on :1;
 bool blink_on :1;
-bool scroll_on :1;
 
 } lcd_state_t;
 
+void IO_LCD_configureIO(void);
+
 void IO_LCD_Init(void);
 
-void IO_LCD_WriteChar(char character);
+void IO_LCD_ClearDisplay(void);
+
+void IO_LCD_putc(char character);
+
+void IO_LCD_putrc(const char character);
+
+void IO_LCD_puts(char *str);
+
+void IO_LCD_putrs(const char *str);
+
+void IO_LCD_SetCursor(char row, char col);
+
+void IO_LCD_EnableCursor(void);
+
+void IO_LCD_DisableCursor(void);
+
+void IO_LCD_EnableDisplay(void);
+
+void IO_LCD_DisableDisplay(void);
+
+void IO_LCD_EnableBlink(void);
+
+void IO_LCD_DisableBlink(void);
+
+void IO_LCD_SetEntryMode(bool inc_dec, bool disp_shift);
+
+void IO_LCD_ShiftCursor(bool direction);
+
+void IO_LCD_ShiftDisplay(bool direction);
 
 # 5 "IO_LCD.c"
 lcd_state_t lcd_state;
 
 static void write_port(char data) {
 
+# 24
+LATJbits.LATJ7 = (data >> 3) & 0x01;
+LATJbits.LATJ6 = (data >> 2) & 0x01;
+LATJbits.LATJ5 = (data >> 1) & 0x01;
+LATJbits.LATJ4 = data & 0x01;
 
 
-LATJbits.LATJ7 = (data >> 7) & 0x01;
-LATJbits.LATJ6 = (data >> 6) & 0x01;
-LATJbits.LATJ5 = (data >> 5) & 0x01;
-LATJbits.LATJ4 = (data >> 4) & 0x01;
-LATJbits.LATJ3 = (data >> 3) & 0x01;
-LATJbits.LATJ2 = (data >> 2) & 0x01;
-LATJbits.LATJ1 = (data >> 1) & 0x01;
-LATJbits.LATJ0 = data & 0x01;
 
-# 31
 }
 
 static void write_cmd(char cmd) {
 
-
-
 LATHbits.LATH7 = 0;
 
+# 60
 LATJbits.LATJ7 = (cmd >> 7) & 0x01;
 LATJbits.LATJ6 = (cmd >> 6) & 0x01;
 LATJbits.LATJ5 = (cmd >> 5) & 0x01;
 LATJbits.LATJ4 = (cmd >> 4) & 0x01;
-LATJbits.LATJ3 = (cmd >> 3) & 0x01;
-LATJbits.LATJ2 = (cmd >> 2) & 0x01;
-LATJbits.LATJ1 = (cmd >> 1) & 0x01;
-LATJbits.LATJ0 = cmd & 0x01;
 
 LATHbits.LATH6 = 1;
-
 _delay((unsigned long)((20)*(10000000/4000000.0)));
-
 LATHbits.LATH6 = 0;
-
 _delay((unsigned long)((20)*(10000000/4000000.0)));
 
-# 90
+LATJbits.LATJ7 = (cmd >> 3) & 0x01;
+LATJbits.LATJ6 = (cmd >> 2) & 0x01;
+LATJbits.LATJ5 = (cmd >> 1) & 0x01;
+LATJbits.LATJ4 = cmd & 0x01;
+
+LATHbits.LATH6 = 1;
+_delay((unsigned long)((20)*(10000000/4000000.0)));
+LATHbits.LATH6 = 0;
+_delay((unsigned long)((20)*(10000000/4000000.0)));
+
+
+
 }
 
 static void write_data(char data) {
 
-
-
 LATHbits.LATH7 = 1;
 
+# 111
 LATJbits.LATJ7 = (data >> 7) & 0x01;
 LATJbits.LATJ6 = (data >> 6) & 0x01;
 LATJbits.LATJ5 = (data >> 5) & 0x01;
 LATJbits.LATJ4 = (data >> 4) & 0x01;
-LATJbits.LATJ3 = (data >> 3) & 0x01;
-LATJbits.LATJ2 = (data >> 2) & 0x01;
-LATJbits.LATJ1 = (data >> 1) & 0x01;
-LATJbits.LATJ0 = data & 0x01;
 
 LATHbits.LATH6 = 1;
-
 _delay((unsigned long)((20)*(10000000/4000000.0)));
-
 LATHbits.LATH6 = 0;
 
 _delay((unsigned long)((20)*(10000000/4000000.0)));
 
-# 149
+LATJbits.LATJ7 = (data >> 3) & 0x01;
+LATJbits.LATJ6 = (data >> 2) & 0x01;
+LATJbits.LATJ5 = (data >> 1) & 0x01;
+LATJbits.LATJ4 = data & 0x01;
+
+LATHbits.LATH6 = 1;
+_delay((unsigned long)((20)*(10000000/4000000.0)));
+LATHbits.LATH6 = 0;
+
+_delay((unsigned long)((20)*(10000000/4000000.0)));
+
+
+
+_delay((unsigned long)((60)*(10000000/4000000.0)));
+
+LATHbits.LATH7 = 0;
+
 }
 
-void IO_LCD_Init(void) {
+void IO_LCD_configureIO(void) {
 
-
-
+# 158
 TRISJbits.TRISJ7 = 0;
 TRISJbits.TRISJ6 = 0;
 TRISJbits.TRISJ5 = 0;
 TRISJbits.TRISJ4 = 0;
-TRISJbits.TRISJ3 = 0;
-TRISJbits.TRISJ2 = 0;
-TRISJbits.TRISJ1 = 0;
-TRISJbits.TRISJ0 = 0;
 
-# 175
+
+
 TRISHbits.TRISH6 = 0;
 TRISHbits.TRISH7 = 0;
 
@@ -8295,6 +8328,11 @@ LATHbits.LATH6 = 0;
 LATHbits.LATH7 = 0;
 
 write_port(0x00);
+
+
+}
+
+void IO_LCD_Init(void) {
 
 _delay((unsigned long)((40)*(10000000/4000.0)));
 
@@ -8305,11 +8343,11 @@ _delay((unsigned long)((150)*(10000000/4000000.0)));
 write_cmd(0x30);
 _delay((unsigned long)((150)*(10000000/4000000.0)));
 
+# 195
+write_cmd(0x20);
 
 
-write_cmd(0x38);
 
-# 204
 _delay((unsigned long)((60)*(10000000/4000000.0)));
 write_cmd(0x08);
 _delay((unsigned long)((60)*(10000000/4000000.0)));
@@ -8323,7 +8361,6 @@ _delay((unsigned long)((60)*(10000000/4000000.0)));
 lcd_state.blink_on = 0;
 lcd_state.cursor_on = 0;
 lcd_state.display_on = 1;
-lcd_state.scroll_on = 0;
 lcd_state.DDRAM_addr = 0x00;
 lcd_state.CGRAM_addr = 0x00;
 
@@ -8331,67 +8368,156 @@ lcd_state.CGRAM_addr = 0x00;
 
 void IO_LCD_CursorHome(void) {
 
+write_cmd(0x02);
+_delay((unsigned long)((2)*(10000000/4000.0)));
 
 }
 
-void IO_LCD_WriteChar(char character) {
+void IO_LCD_ClearDisplay(void) {
+
+write_cmd(0x01);
+_delay((unsigned long)((2)*(10000000/4000.0)));
+
+}
+
+void IO_LCD_putc(char character) {
 
 write_data(character);
-_delay((unsigned long)((60)*(10000000/4000000.0)));
 
 }
 
-void IO_LCD_SetCursor(char x, char y) {
+void IO_LCD_putrc(const char character) {
 
+write_data(character);
+
+}
+
+void IO_LCD_puts(char * str) {
+
+char i =0;
+
+while(str[i] != (0)) {
+
+write_data(str[i]);
+i++;
+
+}
+
+}
+
+void IO_LCD_putrs(const char * str) {
+
+char i = 0;
+
+while(str[i] != (0)) {
+
+write_data(str[i]);
+i++;
+
+}
+
+}
+
+void IO_LCD_SetCursor(char row, char col) {
+
+switch(row) {
+case(1):
+write_cmd(0x80 | col - 1);
+break;
+case(2):
+write_cmd(0x80 | col + 39);
+break;
+case(3):
+write_cmd(0x80 | col + 19);
+break;
+case(4):
+write_cmd(0x80 | col + 83);
+break;
+default:
+break;
+}
+
+_delay((unsigned long)((60)*(10000000/4000000.0)));
 
 }
 
 void IO_LCD_EnableCursor(void) {
 
+write_cmd(0x08 | (lcd_state.display_on << 2) | (1 << 1) | (lcd_state.blink_on));
+
+lcd_state.cursor_on = 1;
+
+_delay((unsigned long)((60)*(10000000/4000000.0)));
 
 }
 
 void IO_LCD_DisableCursor(void) {
 
+write_cmd(0x08 | (lcd_state.display_on << 2) | (0 << 1) | (lcd_state.blink_on));
+
+lcd_state.cursor_on = 0;
+
+_delay((unsigned long)((60)*(10000000/4000000.0)));
 
 }
 
 void IO_LCD_EnableDisplay(void) {
 
+write_cmd(0x08 | (1 << 2) | (lcd_state.cursor_on << 1) | (lcd_state.blink_on));
+
+lcd_state.display_on = 1;
+
+_delay((unsigned long)((60)*(10000000/4000000.0)));
 
 }
 
 void IO_LCD_DisableDisplay(void) {
 
+write_cmd(0x08 | (0 << 2) | (lcd_state.cursor_on << 1) | (lcd_state.blink_on));
+
+lcd_state.display_on = 0;
+
+_delay((unsigned long)((60)*(10000000/4000000.0)));
 
 }
 
 void IO_LCD_EnableBlink(void) {
 
+write_cmd(0x08 | (lcd_state.display_on << 2) | (lcd_state.cursor_on << 1) | (1));
+
+lcd_state.blink_on = 1;
+
+_delay((unsigned long)((60)*(10000000/4000000.0)));
 
 }
 
 void IO_LCD_DisableBlink(void) {
 
+write_cmd(0x08 | (lcd_state.display_on << 2) | (lcd_state.cursor_on << 1) | (0));
+
+lcd_state.blink_on = 0;
+
+_delay((unsigned long)((60)*(10000000/4000000.0)));
 
 }
 
-void IO_LCD_EnableScroll(void) {
+void IO_LCD_SetEntryMode(bool inc_dec, bool disp_shift) {
 
-
-}
-
-void IO_LCD_DisableScroll(void) {
-
+write_cmd(0x04 | (inc_dec << 1) | disp_shift);
+_delay((unsigned long)((60)*(10000000/4000000.0)));
 
 }
 
-void IO_LCD_SetCursorShift(char direction) {
+void IO_LCD_ShiftCursor(char direction) {
 
+write_cmd(0x10 | (0 << 3) | (direction << 2));
+_delay((unsigned long)((60)*(10000000/4000000.0)));
 
 }
 
-void IO_LCD_SetDisplayShift(char direction) {
+void IO_LCD_ShiftDisplay(char direction) {
 
+write_cmd(0x10 | (1 << 3) | (direction << 2));
+_delay((unsigned long)((60)*(10000000/4000000.0)));
 
 }

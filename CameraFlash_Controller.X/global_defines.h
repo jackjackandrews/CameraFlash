@@ -21,8 +21,7 @@ extern "C" {
     #define FALSE   0
 #endif
 
-#define FOSC 10000000
-#define _XTAL_FREQ FOSC
+#define _XTAL_FREQ 10000000
 
 
 typedef char bool;
@@ -51,7 +50,13 @@ typedef char bool;
 #define LCD_LAT_EN LATHbits.LATH6
 #define LCD_LAT_RS LATHbits.LATH7
 
-#define LCD_MODE_8BIT
+#define LCD_MODE_4BIT
+
+#define ENCODER_TRIS_A  TRISGbits.TRISG3
+#define ENCODER_TRIS_B  TRISGbits.TRISG4
+
+#define ENCODER_PORT_A  PORTGbits.RG3
+#define ENCODER_PORT_B  PORTGbits.RG4
 
 
     

@@ -8184,7 +8184,67 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 28 "global_defines.h"
+# 7 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdarg.h"
+typedef void * va_list[1];
+
+#pragma intrinsic(__va_start)
+extern void * __va_start(void);
+
+#pragma intrinsic(__va_arg)
+extern void * __va_arg(void *, ...);
+
+# 43 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdio.h"
+struct __prbuf
+{
+char * ptr;
+void (* func)(char);
+};
+
+# 29 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\errno.h"
+extern int errno;
+
+# 12 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\conio.h"
+extern void init_uart(void);
+
+extern char getch(void);
+extern char getche(void);
+extern void putch(char);
+extern void ungetch(char);
+
+extern __bit kbhit(void);
+
+# 23
+extern char * cgets(char *);
+extern void cputs(const char *);
+
+# 88 "C:\Program Files (x86)\Microchip\xc8\v1.38\include\stdio.h"
+extern int cprintf(char *, ...);
+#pragma printf_check(cprintf)
+
+
+
+extern int _doprnt(struct __prbuf *, const register char *, register va_list);
+
+
+# 180
+#pragma printf_check(vprintf) const
+#pragma printf_check(vsprintf) const
+
+extern char * gets(char *);
+extern int puts(const char *);
+extern int scanf(const char *, ...) __attribute__((unsupported("scanf() is not supported by this compiler")));
+extern int sscanf(const char *, const char *, ...) __attribute__((unsupported("sscanf() is not supported by this compiler")));
+extern int vprintf(const char *, va_list) __attribute__((unsupported("vprintf() is not supported by this compiler")));
+extern int vsprintf(char *, const char *, va_list) __attribute__((unsupported("vsprintf() is not supported by this compiler")));
+extern int vscanf(const char *, va_list ap) __attribute__((unsupported("vscanf() is not supported by this compiler")));
+extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
+
+#pragma printf_check(printf) const
+#pragma printf_check(sprintf) const
+extern int sprintf(char *, const char *, ...);
+extern int printf(const char *, ...);
+
+# 27 "global_defines.h"
 typedef char bool;
 
 
@@ -8288,7 +8348,7 @@ void IO_Buttons_enableInterrupt(void);
 
 void IO_Buttons_switchInterruptPriority(bool interrupt_priority);
 
-void IO_Buttons_configure(bool use_interrupts, bool interrupt_priority);
+void IO_Buttons_configureIO(bool use_interrupts, bool interrupt_priority);
 
 bool IO_Buttons_getButton(buttons_t button);
 
@@ -8301,13 +8361,13 @@ D_1, D_2, D_3, D_4
 
 } leds_t;
 
-void IO_LED_configure(void);
+void IO_LED_configureIO(void);
 
 bool IO_LED_getLED(leds_t led);
 
 void IO_LED_setLED(leds_t led, bool state);
 
-# 18 "IO_LCD.h"
+# 24 "IO_LCD.h"
 typedef struct {
 
 char DDRAM_addr;
@@ -8315,15 +8375,44 @@ char CGRAM_addr;
 bool display_on :1;
 bool cursor_on :1;
 bool blink_on :1;
-bool scroll_on :1;
 
 } lcd_state_t;
 
+void IO_LCD_configureIO(void);
+
 void IO_LCD_Init(void);
 
-void IO_LCD_WriteChar(char character);
+void IO_LCD_ClearDisplay(void);
 
-# 32 "TMR_SysTick.h"
+void IO_LCD_putc(char character);
+
+void IO_LCD_putrc(const char character);
+
+void IO_LCD_puts(char *str);
+
+void IO_LCD_putrs(const char *str);
+
+void IO_LCD_SetCursor(char row, char col);
+
+void IO_LCD_EnableCursor(void);
+
+void IO_LCD_DisableCursor(void);
+
+void IO_LCD_EnableDisplay(void);
+
+void IO_LCD_DisableDisplay(void);
+
+void IO_LCD_EnableBlink(void);
+
+void IO_LCD_DisableBlink(void);
+
+void IO_LCD_SetEntryMode(bool inc_dec, bool disp_shift);
+
+void IO_LCD_ShiftCursor(bool direction);
+
+void IO_LCD_ShiftDisplay(bool direction);
+
+# 40 "TMR_SysTick.h"
 extern volatile unsigned int counter;
 
 inline void TMR_SysTick_ISR(void);
@@ -8346,11 +8435,30 @@ unsigned int TMR_SysTick_getCounter(void);
 
 void TMR_SysTick_setCounter(unsigned int value);
 
-# 12 "test.c"
+# 21 "IO_Encoder.h"
+typedef struct {
+
+unsigned int count;
+bool direction :1;
+
+} encoder_state_t;
+
+inline void IO_Encoder_ISR(void);
+
+void IO_Encoder_configureIO(void);
+
+unsigned int IO_Encoder_getCount(void);
+
+
+# 14 "test.c"
+#pragma warning disable 520
+
 void interrupt ISR(void) {
 
 if(INTCONbits.TMR0IF == 1) {
 TMR_SysTick_ISR();
+
+IO_Encoder_ISR();
 }
 
 
@@ -8358,7 +8466,8 @@ TMR_SysTick_ISR();
 
 void main(void) {
 
-unsigned int count;
+unsigned int count = 0;
+char buff[20];
 
 RCONbits.IPEN = 0;
 
@@ -8366,19 +8475,26 @@ INTCONbits.PEIE = 0;
 INTCONbits.GIE = 1;
 
 TMR_SysTick_configure(0);
-IO_LED_configure();
-
-TRISJ = 0x0F;
-TRISHbits.TRISH6 = 0;
-TRISHbits.TRISH7 = 0;
+IO_LED_configureIO();
+IO_LCD_configureIO();
+IO_Encoder_configureIO();
 
 IO_LCD_Init();
 
-IO_LCD_WriteChar('h');
+IO_LCD_putrs("George has ");
+IO_LCD_SetCursor(2, 1);
+IO_LCD_putrs("friends");
+IO_LCD_SetCursor(1, 12);
 
-while(1) {
+while(1){
 
+count += IO_Encoder_getCount();
+sprintf(buff, "%-5d", count);
+IO_LCD_puts(buff);
 
+Delay10KTCYx(10);
+
+IO_LCD_SetCursor(1, 12);
 
 }
 

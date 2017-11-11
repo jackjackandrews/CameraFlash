@@ -53,7 +53,7 @@ extern "C" {
     
     void IO_Buttons_switchInterruptPriority(bool interrupt_priority);
     
-    void IO_Buttons_configure(bool use_interrupts, bool interrupt_priority);
+    void IO_Buttons_configureIO(bool use_interrupts, bool interrupt_priority);
     
     bool IO_Buttons_getButton(buttons_t button);
     

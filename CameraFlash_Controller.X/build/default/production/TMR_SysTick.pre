@@ -8184,10 +8184,10 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 28 "global_defines.h"
+# 27 "global_defines.h"
 typedef char bool;
 
-# 32 "TMR_SysTick.h"
+# 40 "TMR_SysTick.h"
 extern volatile unsigned int counter;
 
 inline void TMR_SysTick_ISR(void);
