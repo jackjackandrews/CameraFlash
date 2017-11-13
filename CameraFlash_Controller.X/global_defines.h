@@ -21,11 +21,14 @@ extern "C" {
     #define FALSE   0
 #endif
 
-#define _XTAL_FREQ 10000000
+#define _XTAL_FREQ 10000000     //Crystal frequency for xc8 delay routines
+    
+#define _TCY 0.4    //TCY in microseconds
 
 
 typedef char bool;
 
+//LCD TRIS and LAT bits
 #define LCD_TRIS_D7 TRISJbits.TRISJ7
 #define LCD_TRIS_D6 TRISJbits.TRISJ6
 #define LCD_TRIS_D5 TRISJbits.TRISJ5
@@ -52,6 +55,7 @@ typedef char bool;
 
 #define LCD_MODE_4BIT
 
+//Encoder TRIS and PORT bits
 #define ENCODER_TRIS_A  TRISGbits.TRISG3
 #define ENCODER_TRIS_B  TRISGbits.TRISG4
 

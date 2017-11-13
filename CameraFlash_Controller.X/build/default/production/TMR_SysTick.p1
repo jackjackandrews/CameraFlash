@@ -6329,7 +6329,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 157: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 159: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 161: extern __nonreentrant void _delay3(unsigned char);
-[; ;global_defines.h: 27: typedef char bool;
+[; ;global_defines.h: 29: typedef char bool;
 [; ;TMR_SysTick.h: 40: extern volatile unsigned int counter;
 [; ;TMR_SysTick.h: 42: inline void TMR_SysTick_ISR(void);
 [; ;TMR_SysTick.h: 44: void TMR_SysTick_enableInterrupt(void);

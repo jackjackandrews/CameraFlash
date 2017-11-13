@@ -6325,7 +6325,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 157: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 159: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 161: extern __nonreentrant void _delay3(unsigned char);
-[; ;global_defines.h: 27: typedef char bool;
+[; ;global_defines.h: 29: typedef char bool;
 [; ;IO_LED.h: 15: typedef enum {
 [; ;IO_LED.h: 17: D_1, D_2, D_3, D_4
 [; ;IO_LED.h: 19: } leds_t;

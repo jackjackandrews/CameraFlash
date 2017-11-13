@@ -6372,7 +6372,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 157: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 159: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 161: extern __nonreentrant void _delay3(unsigned char);
-[; ;global_defines.h: 27: typedef char bool;
+[; ;global_defines.h: 29: typedef char bool;
 [; ;IO_LCD.h: 24: typedef struct {
 [; ;IO_LCD.h: 26: char DDRAM_addr;
 [; ;IO_LCD.h: 27: char CGRAM_addr;
