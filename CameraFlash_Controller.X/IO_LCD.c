@@ -1,3 +1,12 @@
+/* 
+ * File:   IO_LCD.c
+ * Author: Jack Andrews <jack.andrews@student.manchester.ac.uk>
+ * Date: 10/11/2017
+ *
+ * Description: C source file for IO_LCD library. Contains functions to send commands and write data to a Hitachi HD44780 (or compatible) character LCD over a 4/8-bit parallel interface, write access only. 
+ *
+ */
+
 #include <xc.h>
 #include "global_defines.h"
 #include "IO_LCD.h"

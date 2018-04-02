@@ -1,3 +1,12 @@
+/* 
+ * File:   IO_LED.c
+ * Author: Jack Andrews <jack.andrews@student.manchester.ac.uk>
+ * Date: 6/11/2017
+ *
+ * Description: C source file for IO_LED library. Library to interface with the LEDs on the User Interface Board, to set and get their states.
+ *
+ */
+
 #include <xc.h>
 #include "global_defines.h"
 #include "IO_LED.h"

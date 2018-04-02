@@ -1,3 +1,14 @@
+/* 
+ * File:   IO_Buttons.c
+ * Author: Jack Andrews <jack.andrews@student.manchester.ac.uk>
+ * Date: 5/11/2017
+ *
+ * Description: C source file for IO_Buttons library. Contains functions used to interface with buttons on User Interface Board using both polled and interrupt-driven methods.
+ *              Requires global_defines.h to work.
+ *
+ * #TODO: Change PORT/TRIS/LAT register definitions to be pulled in from global_defines.h
+ */
+
 #include <xc.h>
 #include "global_defines.h"
 #include "IO_Buttons.h"

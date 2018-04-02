@@ -1,3 +1,12 @@
+/* 
+ * File:   IO_Encoder.c
+ * Author: Jack Andrews <jack.andrews@student.manchester.ac.uk>
+ * Date: 11/11/2017
+ *
+ * Description: C source file for IO_Encoder library. Library to interface with rotary encoder on User Interface Board.
+ *              Updates encoder count in a timer interrupt, which must be configured/provided, and IO_Encoder_ISR() must be planted in ISR for it to work.
+ */
+
 #include <xc.h>
 #include "global_defines.h"
 #include "IO_Encoder.h"

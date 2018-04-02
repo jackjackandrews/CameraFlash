@@ -1,8 +1,10 @@
 /* 
  * File:   IO_Encoder.h
- * Author: Jack
+ * Author: Jack Andrews <jack.andrews@student.manchester.ac.uk>
+ * Date: 11/11/2017
  *
- * Created on 11 November 2017, 20:38
+ * Description: Header file for IO_Encoder library. Contains function prototypes and defines required for library functions.
+ *
  */
 
 #ifndef IO_ENCODER_H

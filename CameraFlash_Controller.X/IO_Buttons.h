@@ -1,8 +1,10 @@
 /* 
- * File:   Buttons.h
- * Author: Jack
+ * File:   IO_Buttons.h
+ * Author: Jack Andrews <jack.andrews@student.manchester.ac.uk>
+ * Date: 5/11/2017
  *
- * Created on 05 November 2017, 21:06
+ * Description: Header file for IO_Buttons library. Contains function prototypes and defines required for library functions.
+ *
  */
 
 #ifndef BUTTONS_H

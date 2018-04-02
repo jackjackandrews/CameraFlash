@@ -1,8 +1,10 @@
 /* 
  * File:   IO_LED.h
- * Author: Jack
+ * Author: Jack Andrews <jack.andrews@student.manchester.ac.uk>
+ * Date: 6/11/2017
  *
- * Created on 06 November 2017, 17:57
+ * Description: Header file for IO_LED library. Contains function prototypes and defines required for library functions.
+ *
  */
 
 #ifndef IO_LED_H

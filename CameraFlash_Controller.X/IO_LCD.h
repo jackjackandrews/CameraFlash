@@ -1,8 +1,10 @@
 /* 
  * File:   IO_LCD.h
- * Author: Jack
+ * Author: Jack Andrews <jack.andrews@student.manchester.ac.uk>
+ * Date: 10/11/2017
  *
- * Created on 10 November 2017, 22:55
+ * Description: Header file for IO_LCD library. Contains function prototypes and defines required for library functions.
+ *
  */
 
 #ifndef IO_LCD_H
@@ -66,11 +68,8 @@ extern "C" {
     void IO_LCD_ShiftDisplay(bool direction);
 
 
-
-
 #ifdef	__cplusplus
 }
 #endif
 
 #endif	/* IO_LCD_H */
-
