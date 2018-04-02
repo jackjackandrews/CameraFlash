@@ -4,7 +4,7 @@
 // 'C' source line config statements
 
 // CONFIG1H
-#pragma config OSC = HS      // Oscillator Selection bits (External RC oscillator, port function on RA6)
+#pragma config OSC = HSPLL      // Oscillator Selection bits (External RC oscillator, port function on RA6)
 #pragma config FCMEN = OFF      // Fail-Safe Clock Monitor Enable bit (Fail-Safe Clock Monitor disabled)
 #pragma config IESO = OFF       // Internal/External Oscillator Switchover bit (Two-Speed Start-up disabled)
 

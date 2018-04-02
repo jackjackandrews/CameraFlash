@@ -4,15 +4,15 @@
 
 void IO_LED_configureIO(void) {
     
-    TRISHbits.TRISH0 = 0;
-    TRISHbits.TRISH1 = 0;
-    TRISHbits.TRISH2 = 0;
-    TRISHbits.TRISH3 = 0;
+    LED_TRIS_D_1 = 0;
+    LED_TRIS_D_2 = 0;
+    LED_TRIS_D_3 = 0;
+    LED_TRIS_D_4 = 0;
     
-    LATHbits.LATH0 = 1;
-    LATHbits.LATH1 = 1;
-    LATHbits.LATH2 = 1;
-    LATHbits.LATH3 = 1;
+    LED_LAT_D_1 = 1;
+    LED_LAT_D_2 = 1;
+    LED_LAT_D_3 = 1;
+    LED_LAT_D_4 = 1;
     
 }
 
@@ -20,16 +20,16 @@ bool IO_LED_getLED(leds_t led) {
     
     switch(led) {
         case D_1:
-            return(!LATHbits.LATH0);
+            return(!LED_LAT_D_1);
             break;
         case D_2:
-            return(!LATHbits.LATH1);
+            return(!LED_LAT_D_2);
             break;
         case D_3:
-            return(!LATHbits.LATH2);
+            return(!LED_LAT_D_3);
             break;
         case D_4:
-            return(!LATHbits.LATH3);
+            return(!LED_LAT_D_4);
             break;
         default:
             break;
@@ -42,16 +42,16 @@ void IO_LED_setLED(leds_t led, bool state) {
     
     switch(led) {
         case D_1:
-            LATHbits.LATH0 = !state;
+            LED_LAT_D_1 = !state;
             break;
         case D_2:
-            LATHbits.LATH1 = !state;
+            LED_LAT_D_2 = !state;
             break;
         case D_3:
-            LATHbits.LATH2 = !state;
+            LED_LAT_D_3 = !state;
             break;
         case D_4:
-            LATHbits.LATH3 = !state;
+            LED_LAT_D_4 = !state;
             break;
         default:
             break;

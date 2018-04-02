@@ -71,7 +71,7 @@ void main(void) {
     LATGbits.LATG0 = 1;
     
     IO_LCD_SetCursor(4,1);
-    IO_LCD_putrs("UNARMED");
+    IO_LCD_putrs("DISARMED");
     
     while(1) {
         
@@ -80,7 +80,7 @@ void main(void) {
             done = FALSE;
             
             IO_LCD_SetCursor(4,1);
-            IO_LCD_putrs("ARMED  ");
+            IO_LCD_putrs("ARMED   ");
             
             CCPR3L = timer_reg_value & 0x00FF;
             CCPR3H = (timer_reg_value >> 8) & 0x00FF;
@@ -90,8 +90,8 @@ void main(void) {
             
             while(!IO_Buttons_getButton(PB_4));                
                 
-                CCP3CON = 0b00001001;
-                T3CONbits.TMR3ON = 1;    
+            CCP3CON = 0b00001001;
+            T3CONbits.TMR3ON = 1;    
             
             while(done == FALSE);
             
@@ -103,7 +103,7 @@ void main(void) {
             Delay10KTCYx(200);
             
             IO_LCD_SetCursor(4,1);
-            IO_LCD_putrs("UNARMED");                     
+            IO_LCD_putrs("DISARMED");                     
             
             
         }

@@ -175,7 +175,10 @@ void IO_LCD_configureIO(void) {
 
 void IO_LCD_Init(void) {
     
-    __delay_ms(40);
+    __delay_ms(10);
+    __delay_ms(10);
+    __delay_ms(10);
+    __delay_ms(10);
     
     write_cmd(0x30);
     __delay_ms(5);
