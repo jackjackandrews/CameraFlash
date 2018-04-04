@@ -1,3 +1,13 @@
+/* 
+ * File:   TMR_SysTick.c
+ * Author: Jack Andrews <jack.andrews@student.manchester.ac.uk>
+ * Date: 10/11/2017
+ *
+ * Description: C source file for TMR_SysTick library. Provides a basic 1 ms timer using the TIMER0 peripheral which can be used for delays, scheduling system events etc.
+ *              Requires MPLAB C18 Compiler libraries and some define statements in global_defines.h.
+ *
+ */
+
 #include <xc.h>
 #include "plib/timers.h"
 #include "global_defines.h"

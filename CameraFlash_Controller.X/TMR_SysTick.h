@@ -1,8 +1,10 @@
 /* 
  * File:   TMR_SysTick.h
- * Author: Jack
+ * Author: Jack Andrews <jack.andrews@student.manchester.ac.uk>
+ * Date: 10/11/2017
  *
- * Created on 10 November 2017, 18:56
+ * Description: Header file for TMR_SysTick library. Contains function prototypes and defines required for library functions.
+ *
  */
 
 #ifndef TMR_SYSTICK_H
